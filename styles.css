@@ -19,6 +19,13 @@
     --quote-bg: #eff6ff;
     --quote-border: #bfdbfe;
     --footer-bg: #0f172a;
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 40px;
+    --spacing-2xl: 60px;
+    --spacing-3xl: 80px;
 }
 
 [data-theme="dark"] {
@@ -59,7 +66,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
 }
 
 a {
@@ -83,6 +90,7 @@ a:hover {
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
+    margin: var(--spacing-xs) 0;
 }
 
 .btn-primary:hover {
@@ -102,6 +110,7 @@ a:hover {
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
+    margin: var(--spacing-xs) 0;
 }
 
 .btn-secondary:hover {
@@ -119,6 +128,16 @@ a:hover {
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Add spacing between sections */
+main > section {
+    margin-bottom: 0;
+}
+
+/* Ensure proper spacing between consecutive sections */
+main > section + section {
+    margin-top: var(--spacing-3xl);
 }
 
 .header .container {
@@ -236,7 +255,7 @@ a:hover {
     height: 100vh;
     background-color: var(--white);
     box-shadow: var(--shadow-lg);
-    padding: 80px 20px 40px;
+    padding: var(--spacing-2xl) var(--spacing-md) var(--spacing-xl);
     transition: left 0.3s ease, background-color 0.3s ease;
     z-index: 2000;
 }
@@ -249,12 +268,22 @@ a:hover {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: var(--spacing-lg);
+    padding: 0;
+    margin: 0;
+}
+
+.mobile-nav ul li a {
+    padding: var(--spacing-sm) 0;
+    display: block;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
 }
 
 /* Hero Section */
 .hero {
-    padding: 80px 0 40px;
+    padding: var(--spacing-3xl) 0 var(--spacing-2xl);
     background: var(--hero-gradient);
     transition: background 0.3s ease;
 }
@@ -270,19 +299,19 @@ a:hover {
     font-size: 48px;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
     line-height: 1.2;
 }
 
 .hero-subtitle {
     font-size: 18px;
     color: var(--text-light);
-    margin-bottom: 32px;
+    margin-bottom: var(--spacing-2xl);
 }
 
 .cta-buttons {
     display: flex;
-    gap: 16px;
+    gap: var(--spacing-md);
     flex-wrap: wrap;
 }
 
@@ -336,19 +365,19 @@ a:hover {
 
 /* Features Section */
 .features {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--white);
 }
 
 .features-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: var(--spacing-lg);
 }
 
 .feature-card {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: var(--spacing-lg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     text-align: center;
@@ -362,23 +391,24 @@ a:hover {
 
 .feature-icon {
     font-size: 32px;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
 }
 
 .feature-card h3 {
     font-size: 18px;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-dark);
 }
 
 .feature-card p {
     color: var(--text-light);
     font-size: 14px;
+    margin-bottom: 0;
 }
 
 /* Quote Calculator */
 .quote-calculator {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--bg-light);
 }
 
@@ -391,30 +421,31 @@ a:hover {
 
 .quote-info h2 {
     font-size: 32px;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-dark);
 }
 
 .quote-info p {
     color: var(--text-light);
     font-size: 16px;
+    margin-bottom: var(--spacing-md);
 }
 
 .calculator {
     background-color: var(--card-bg);
-    padding: 32px;
+    padding: var(--spacing-2xl);
     border-radius: 12px;
     box-shadow: var(--shadow);
     transition: background-color 0.3s ease;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-md);
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     font-weight: 500;
     color: var(--text-dark);
 }
@@ -422,7 +453,7 @@ a:hover {
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: var(--spacing-md);
 }
 
 .form-group input,
@@ -445,8 +476,8 @@ a:hover {
 }
 
 .quote-result {
-    margin-top: 24px;
-    padding: 24px;
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
     background-color: var(--quote-bg);
     border-radius: 12px;
     border: 1px solid var(--quote-border);
@@ -454,15 +485,15 @@ a:hover {
 }
 
 .quote-result h3 {
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
     color: var(--primary-color);
 }
 
 .cost-display {
     display: flex;
     align-items: baseline;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
 }
 
 .cost-value {
@@ -474,17 +505,18 @@ a:hover {
 .cost-note {
     color: var(--text-light);
     font-size: 14px;
+    margin-bottom: 0;
 }
 
 /* Products Section */
 .products {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--white);
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: var(--spacing-2xl);
 }
 
 .section-header h2 {
@@ -496,22 +528,24 @@ a:hover {
 .section-header p {
     color: var(--text-light);
     font-size: 16px;
+    margin-top: var(--spacing-sm);
 }
 
 .products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: var(--spacing-lg);
 }
 
 .product-card {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    gap: 24px;
+    gap: var(--spacing-lg);
     background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     overflow: hidden;
+    padding: var(--spacing-md);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
@@ -552,28 +586,24 @@ a:hover {
     background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%);
 }
 
-.product-info {
-    padding: 24px;
-}
-
 .product-info h3 {
     font-size: 20px;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-dark);
 }
 
 .product-info p {
     color: var(--text-light);
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
 }
 
 .product-features {
     list-style: none;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-md);
 }
 
 .product-features li {
-    padding: 8px 0;
+    padding: var(--spacing-xs) 0;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-light);
 }
@@ -582,28 +612,34 @@ a:hover {
     content: "✓";
     color: var(--success);
     font-weight: bold;
-    margin-right: 8px;
+    margin-right: var(--spacing-xs);
+}
+
+.product-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
 }
 
 /* Process Section */
 .process {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--bg-light);
 }
 
 .process-steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: var(--spacing-lg);
 }
 
 .process-step {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: var(--spacing-lg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     display: flex;
-    gap: 16px;
+    gap: var(--spacing-md);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
@@ -626,29 +662,30 @@ a:hover {
 }
 
 .step-content h3 {
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-dark);
 }
 
 .step-content p {
     color: var(--text-light);
+    margin-bottom: 0;
 }
 
 /* Customers Section */
 .customers {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--white);
 }
 
 .customers-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: var(--spacing-lg);
 }
 
 .customer-card {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: var(--spacing-lg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     text-align: center;
@@ -662,17 +699,17 @@ a:hover {
 
 .customer-logo {
     font-size: 48px;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
 }
 
 .customer-card h4 {
-    margin-bottom: 12px;
+    margin-bottom: var(--spacing-sm);
     color: var(--text-dark);
 }
 
 .customer-card p {
     color: var(--text-light);
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
     font-style: italic;
 }
 
@@ -683,7 +720,7 @@ a:hover {
 
 /* About Section */
 .about {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--white);
 }
 
@@ -696,26 +733,26 @@ a:hover {
 
 .about-text h2 {
     font-size: 32px;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-lg);
     color: var(--text-dark);
 }
 
 .about-text p {
     color: var(--text-light);
-    margin-bottom: 24px;
+    margin-bottom: var(--spacing-lg);
     font-size: 16px;
 }
 
 .about-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 24px;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
 }
 
 .stat {
     text-align: center;
-    padding: 16px;
+    padding: var(--spacing-md);
     background-color: var(--bg-light);
     border-radius: 12px;
 }
@@ -725,12 +762,13 @@ a:hover {
     font-size: 24px;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 4px;
+    margin-bottom: var(--spacing-xs);
 }
 
 .stat-label {
     font-size: 14px;
     color: var(--text-light);
+    margin-bottom: 0;
 }
 
 .about-image {
@@ -748,7 +786,7 @@ a:hover {
 
 /* Contact Section */
 .contact {
-    padding: 60px 0;
+    padding: var(--spacing-3xl) 0;
     background-color: var(--bg-light);
 }
 
@@ -760,19 +798,19 @@ a:hover {
 
 .contact-info {
     display: grid;
-    gap: 24px;
+    gap: var(--spacing-lg);
 }
 
 .contact-item {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: var(--spacing-lg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     transition: background-color 0.3s ease;
 }
 
 .contact-item h3 {
-    margin-bottom: 12px;
+    margin-bottom: var(--spacing-sm);
     color: var(--text-dark);
     font-size: 18px;
 }
@@ -780,11 +818,12 @@ a:hover {
 .contact-item p {
     color: var(--text-light);
     line-height: 1.8;
+    margin-bottom: 0;
 }
 
 .contact-form {
     background-color: var(--card-bg);
-    padding: 32px;
+    padding: var(--spacing-2xl);
     border-radius: 12px;
     box-shadow: var(--shadow);
     transition: background-color 0.3s ease;
@@ -794,32 +833,32 @@ a:hover {
 .footer {
     background-color: var(--footer-bg);
     color: white;
-    padding: 40px 0 20px;
+    padding: var(--spacing-2xl) 0 var(--spacing-md);
     transition: background-color 0.3s ease;
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    margin-bottom: 32px;
+    gap: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
 }
 
 .footer-section h3,
 .footer-section h4 {
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
     color: white;
 }
 
 .footer-section p {
     color: #cbd5e1;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-md);
 }
 
 .footer-section ul {
     list-style: none;
     display: grid;
-    gap: 8px;
+    gap: var(--spacing-xs);
 }
 
 .footer-section a {
@@ -833,7 +872,7 @@ a:hover {
 
 .social-links {
     display: flex;
-    gap: 12px;
+    gap: var(--spacing-sm);
 }
 
 .social-links a {
@@ -847,9 +886,15 @@ a:hover {
 
 .footer-bottom {
     text-align: center;
-    padding-top: 20px;
+    padding-top: var(--spacing-md);
     border-top: 1px solid #1f2937;
     color: #94a3b8;
+}
+
+.section-cta {
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
 }
 
 /* Responsive Design */
@@ -910,7 +955,7 @@ a:hover {
     }
 
     .hero {
-        padding: 60px 0 30px;
+        padding: var(--spacing-2xl) 0 var(--spacing-xl);
     }
 
     .hero-content h1 {
@@ -932,11 +977,16 @@ a:hover {
     .footer-content {
         grid-template-columns: 1fr;
     }
+
+    .section-cta {
+        margin-top: var(--spacing-xl);
+        margin-bottom: var(--spacing-sm);
+    }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 16px;
+        padding: 0 var(--spacing-sm);
     }
 
     .hero-content h1 {
