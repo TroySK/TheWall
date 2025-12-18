@@ -1,3 +1,41 @@
+// Theme Management
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// Function to set theme
+function setTheme(theme, save = true) {
+    htmlElement.setAttribute('data-theme', theme);
+    if (save) {
+        localStorage.setItem('theme', theme);
+    }
+}
+
+// Initialize theme
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+if (savedTheme) {
+    setTheme(savedTheme, false);
+} else if (systemPrefersDark.matches) {
+    setTheme('dark', false);
+}
+
+// Theme toggle click handler
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    });
+}
+
+// Listen for system theme changes
+systemPrefersDark.addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light', false);
+    }
+});
+
 // Mobile Navigation Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const mobileNav = document.getElementById('mobileNav');
@@ -160,10 +198,11 @@ document.querySelectorAll('.feature-card, .product-card, .process-step, .custome
 // Sticky header effect
 window.addEventListener('scroll', () => {
     const header = document.querySelector('.header');
+    const isDark = htmlElement.getAttribute('data-theme') === 'dark';
     if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
+        header.style.background = isDark ? 'rgba(15, 23, 42, 0.98)' : 'rgba(255, 255, 255, 0.98)';
     } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.background = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)';
     }
 });
 

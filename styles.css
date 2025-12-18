@@ -13,6 +13,30 @@
     --border-color: #e2e8f0;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --card-bg: var(--white);
+    --hero-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --quote-bg: #eff6ff;
+    --quote-border: #bfdbfe;
+    --footer-bg: #0f172a;
+}
+
+[data-theme="dark"] {
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --secondary-color: #94a3b8;
+    --text-dark: #f8fafc;
+    --text-light: #cbd5e1;
+    --bg-light: #1e293b;
+    --white: #0f172a;
+    --border-color: #334155;
+    --header-bg: rgba(15, 23, 42, 0.95);
+    --card-bg: #1e293b;
+    --hero-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --quote-bg: #1e293b;
+    --quote-border: #334155;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -90,10 +114,11 @@ a:hover {
 .header {
     position: sticky;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--header-bg);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header .container {
@@ -113,6 +138,40 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 24px;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    color: var(--text-dark);
+    font-size: 20px;
+}
+
+.theme-toggle:hover {
+    background-color: var(--bg-light);
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+    display: block;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+    display: none;
+}
+
+.theme-toggle .sun-icon {
+    display: none;
+}
+
+.theme-toggle .moon-icon {
+    display: block;
 }
 
 .nav-menu {
@@ -175,10 +234,10 @@ a:hover {
     width: 80%;
     max-width: 350px;
     height: 100vh;
-    background-color: white;
+    background-color: var(--white);
     box-shadow: var(--shadow-lg);
     padding: 80px 20px 40px;
-    transition: left 0.3s ease;
+    transition: left 0.3s ease, background-color 0.3s ease;
     z-index: 2000;
 }
 
@@ -196,7 +255,8 @@ a:hover {
 /* Hero Section */
 .hero {
     padding: 80px 0 40px;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: var(--hero-gradient);
+    transition: background 0.3s ease;
 }
 
 .hero .container {
@@ -287,12 +347,12 @@ a:hover {
 }
 
 .feature-card {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 24px;
     border-radius: 12px;
     box-shadow: var(--shadow);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .feature-card:hover {
@@ -341,10 +401,11 @@ a:hover {
 }
 
 .calculator {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 32px;
     border-radius: 12px;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
 }
 
 .form-group {
@@ -371,8 +432,9 @@ a:hover {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: white;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--white);
+    color: var(--text-dark);
 }
 
 .form-group input:focus,
@@ -385,9 +447,10 @@ a:hover {
 .quote-result {
     margin-top: 24px;
     padding: 24px;
-    background-color: #eff6ff;
+    background-color: var(--quote-bg);
     border-radius: 12px;
-    border: 1px solid #bfdbfe;
+    border: 1px solid var(--quote-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .quote-result h3 {
@@ -445,11 +508,11 @@ a:hover {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 24px;
-    background-color: var(--white);
+    background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: var(--shadow);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .product-card:hover {
@@ -535,13 +598,13 @@ a:hover {
 }
 
 .process-step {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 24px;
     border-radius: 12px;
     box-shadow: var(--shadow);
     display: flex;
     gap: 16px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .process-step:hover {
@@ -584,12 +647,12 @@ a:hover {
 }
 
 .customer-card {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 24px;
     border-radius: 12px;
     box-shadow: var(--shadow);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .customer-card:hover {
@@ -701,10 +764,11 @@ a:hover {
 }
 
 .contact-item {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 24px;
     border-radius: 12px;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
 }
 
 .contact-item h3 {
@@ -719,17 +783,19 @@ a:hover {
 }
 
 .contact-form {
-    background-color: var(--white);
+    background-color: var(--card-bg);
     padding: 32px;
     border-radius: 12px;
     box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
 }
 
 /* Footer */
 .footer {
-    background-color: #0f172a;
+    background-color: var(--footer-bg);
     color: white;
     padding: 40px 0 20px;
+    transition: background-color 0.3s ease;
 }
 
 .footer-content {
