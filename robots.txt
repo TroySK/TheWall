@@ -1,0 +1,33 @@
+# robots.txt for The Wall Company India
+# https://thewallcompanyindia.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://thewallcompanyindia.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Disallow crawling of admin pages
+Disallow: /admin/
+Disallow: /cgi-bin/
+
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Image indexing
+User-agent: Googlebot-Image
+Allow: /
+
+# Video indexing
+User-agent: Googlebot-Video
+Allow: /

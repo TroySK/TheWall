@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wall Company India | Premium Pre-Cast Concrete Walls</title>
+    <meta name="description" content="The Wall Company India - Leading manufacturer of high-quality pre-cast concrete walls for residential, commercial, and industrial applications. Durable, cost-effective, and quick installation solutions.">
+    <meta name="keywords" content="pre-cast concrete walls, concrete wall panels, boundary walls, retaining walls, India, construction">
+    <meta name="author" content="The Wall Company India">
+    <link rel="canonical" href="https://thewallcompanyindia.com">
+    <meta property="og:title" content="The Wall Company India | Premium Pre-Cast Concrete Walls">
+    <meta property="og:description" content="Leading manufacturer of high-quality pre-cast concrete walls for residential, commercial, and industrial applications.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thewallcompanyindia.com">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>The Wall Company India</h1>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#customers">Customers</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#customers">Customers</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Premium Pre-Cast Concrete Walls</h1>
+                    <p class="hero-subtitle">Durable. Cost-effective. Quick installation. Trusted by leading construction companies across India.</p>
+                    <div class="cta-buttons">
+                        <a href="#quote" class="btn-primary">Get Instant Quote</a>
+                        <a href="#products" class="btn-secondary">Explore Products</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="wall-showcase">
+                        <div class="wall-panel panel-1"></div>
+                        <div class="wall-panel panel-2"></div>
+                        <div class="wall-panel panel-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>Quality Assurance</h3>
+                        <p>ISO certified manufacturing with strict quality control standards</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Quick Installation</h3>
+                        <p>Reduce construction time by up to 60% with pre-fabricated panels</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Cost Effective</h3>
+                        <p>Save up to 30% on overall project costs</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Durable</h3>
+                        <p>50+ year lifespan with minimal maintenance required</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quote" class="quote-calculator">
+            <div class="container">
+                <div class="quote-content">
+                    <div class="quote-info">
+                        <h2>Instant Quote Calculator</h2>
+                        <p>Get an instant estimate for your pre-cast wall project</p>
+                    </div>
+                    <div class="calculator">
+                        <form id="quoteForm">
+                            <div class="form-group">
+                                <label for="wallType">Wall Type</label>
+                                <select id="wallType" required>
+                                    <option value="">Select wall type</option>
+                                    <option value="boundary">Boundary Wall</option>
+                                    <option value="retaining">Retaining Wall</option>
+                                    <option value="partition">Partition Wall</option>
+                                    <option value="sound">Sound Barrier</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="length">Length (meters)</label>
+                                    <input type="number" id="length" min="1" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Height (meters)</label>
+                                    <input type="number" id="height" min="1" step="0.1" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="thickness">Thickness (mm)</label>
+                                    <select id="thickness" required>
+                                        <option value="100">100 mm</option>
+                                        <option value="150">150 mm</option>
+                                        <option value="200">200 mm</option>
+                                        <option value="250">250 mm</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="finish">Surface Finish</label>
+                                    <select id="finish" required>
+                                        <option value="smooth">Smooth</option>
+                                        <option value="textured">Textured</option>
+                                        <option value="exposed">Exposed Aggregate</option>
+                                        <option value="bush">Bush Hammered</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">Project Location</label>
+                                <select id="location" required>
+                                    <option value="">Select location</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary">Calculate Quote</button>
+                        </form>
+                        <div class="quote-result" id="quoteResult">
+                            <h3>Estimated Cost</h3>
+                            <div class="cost-display">
+                                <span class="cost-value">₹0</span>
+                                <span class="cost-note">Excluding taxes and installation</span>
+                            </div>
+                            <div class="quote-details" id="quoteDetails"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Products</h2>
+                    <p>High-quality pre-cast concrete solutions for every application</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="product-type boundary"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Boundary Walls</h3>
+                            <p>Secure and aesthetically pleasing boundary solutions for residential and commercial properties.</p>
+                            <ul class="product-features">
+                                <li>✓ High security</li>
+                                <li>✓ Various designs</li>
+                                <li>✓ Quick installation</li>
+                            </ul>
+                            <a href="#contact" class="btn-secondary">Request Quote</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="product-type retaining"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Retaining Walls</h3>
+                            <p>Engineered solutions for soil retention and slope stabilization.</p>
+                            <ul class="product-features">
+                                <li>✓ Structural integrity</li>
+                                <li>✓ Drainage systems</li>
+                                <li>✓ Custom designs</li>
+                            </ul>
+                            <a href="#contact" class="btn-secondary">Request Quote</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="product-type partition"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Partition Walls</h3>
+                            <p>Space division solutions for commercial and industrial buildings.</p>
+                            <ul class="product-features">
+                                <li>✓ Sound insulation</li>
+                                <li>✓ Fire resistant</li>
+                                <li>✓ Modular design</li>
+                            </ul>
+                            <a href="#contact" class="btn-secondary">Request Quote</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="product-type sound"></div>
+                        </div>
+                        <div class="product-info">
+                            <h3>Sound Barriers</h3>
+                            <p>Effective noise reduction solutions for highways and industrial areas.</p>
+                            <ul class="product-features">
+                                <li>✓ Noise reduction</li>
+                                <li>✓ Durable</li>
+                                <li>✓ Custom heights</li>
+                            </ul>
+                            <a href="#contact" class="btn-secondary">Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="process">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Process</h2>
+                    <p>From concept to completion - our streamlined manufacturing process</p>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Design & Planning</h3>
+                            <p>Customized wall design based on your specifications and site requirements.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Manufacturing</h3>
+                            <p>Precision manufacturing in our state-of-the-art facility with quality control.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Quality Testing</h3>
+                            <p>Rigorous testing for strength, durability, and compliance with standards.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Delivery & Installation</h3>
+                            <p>Timely delivery and professional installation by our expert team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="customers" class="customers">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Valued Customers</h2>
+                    <p>Trusted by leading construction companies and developers across India</p>
+                </div>
+                <div class="customers-grid">
+                    <div class="customer-card">
+                        <div class="customer-logo">🏗️</div>
+                        <h4>ABC Constructions</h4>
+                        <p>"The quality and timely delivery exceeded our expectations. Highly recommended!"</p>
+                        <div class="customer-rating">★★★★★</div>
+                    </div>
+                    <div class="customer-card">
+                        <div class="customer-logo">🏢</div>
+                        <h4>XYZ Developers</h4>
+                        <p>"Cost-effective solutions with excellent durability. Great partner for large projects."</p>
+                        <div class="customer-rating">★★★★★</div>
+                    </div>
+                    <div class="customer-card">
+                        <div class="customer-logo">🛣️</div>
+                        <h4>Highway Projects Ltd</h4>
+                        <p>"Perfect for our infrastructure projects. Quick installation saved us significant time."</p>
+                        <div class="customer-rating">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>About The Wall Company India</h2>
+                        <p>With over 15 years of experience in the pre-cast concrete industry, we have established ourselves as a leading manufacturer of high-quality pre-cast concrete walls across India.</p>
+                        <p>Our commitment to quality, innovation, and customer satisfaction has made us the preferred choice for construction companies, developers, and infrastructure projects nationwide.</p>
+                        <div class="about-stats">
+                            <div class="stat">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Projects Completed</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Years Experience</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Cities Served</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="factory-showcase"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contact Us</h2>
+                    <p>Get in touch with our team for quotes, consultations, and partnerships</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <h3>📍 Address</h3>
+                            <p>123 Industrial Area, Phase 1<br>Mohali, Punjab 160055<br>India</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>📞 Phone</h3>
+                            <p>+91 98765 43210<br>+91 98765 43211</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>✉️ Email</h3>
+                            <p>info@thewallcompanyindia.com<br>sales@thewallcompanyindia.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>🌐 Business Hours</h3>
+                            <p>Monday - Saturday: 9:00 AM to 6:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" id="company" name="company">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Wall Company India</h3>
+                    <p>Your trusted partner for premium pre-cast concrete wall solutions across India.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#customers">Customers</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Boundary Walls</a></li>
+                        <li><a href="#">Retaining Walls</a></li>
+                        <li><a href="#">Partition Walls</a></li>
+                        <li><a href="#">Sound Barriers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 The Wall Company India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

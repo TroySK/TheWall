@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - The Wall Company India</title>
+    <meta name="description" content="The page you are looking for was not found. Return to our homepage to find what you're looking for.">
+    <meta name="author" content="The Wall Company India">
+    <link rel="canonical" href="https://thewallcompanyindia.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-page {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .error-content {
+            max-width: 600px;
+            padding: 0 20px;
+        }
+        
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        
+        .error-message {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        
+        .wall-illustration {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .wall-block {
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(180deg, #e5e7eb 0%, #d1d5db 100%);
+            border: 2px solid #9ca3af;
+            border-radius: 8px;
+            margin: 0 10px;
+            animation: stack 2s ease-in-out infinite;
+        }
+        
+        .wall-block:nth-child(2) {
+            animation-delay: 0.5s;
+            background: linear-gradient(180deg, #d1d5db 0%, #9ca3af 100%);
+        }
+        
+        .wall-block:nth-child(3) {
+            animation-delay: 1s;
+            background: linear-gradient(180deg, #9ca3af 0%, #6b7280 100%);
+        }
+        
+        @keyframes stack {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>The Wall Company India</h1>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#process">Process</a></li>
+                        <li><a href="index.html#customers">Customers</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#products">Products</a></li>
+            <li><a href="index.html#process">Process</a></li>
+            <li><a href="index.html#customers">Customers</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="error-page">
+            <div class="container">
+                <div class="error-content">
+                    <div class="error-code">404</div>
+                    <h1 class="error-title">Oops! Page Not Found</h1>
+                    <p class="error-message">
+                        The page you're looking for seems to have gone missing, 
+                        kind of like a brick that didn't make it into our wall!
+                    </p>
+                    <div class="error-actions">
+                        <a href="index.html" class="btn-primary">Return Home</a>
+                        <a href="index.html#products" class="btn-secondary">Browse Products</a>
+                        <a href="index.html#contact" class="btn-secondary">Contact Us</a>
+                    </div>
+                    <p class="error-message">
+                        In the meantime, here are some of our sturdy walls to keep you company:
+                    </p>
+                    <div class="wall-illustration">
+                        <div class="wall-block"></div>
+                        <div class="wall-block"></div>
+                        <div class="wall-block"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Wall Company India</h3>
+                    <p>Your trusted partner for premium pre-cast concrete wall solutions across India.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#process">Process</a></li>
+                        <li><a href="index.html#customers">Customers</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Popular Pages</h4>
+                    <ul>
+                        <li><a href="index.html#quote">Instant Quote</a></li>
+                        <li><a href="products.html">Product Range</a></li>
+                        <li><a href="customers.html">Customer Stories</a></li>
+                        <li><a href="process.html">Our Process</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="index.html#quote">Get Quote</a></li>
+                        <li><a href="index.html#products">Product Info</a></li>
+                        <li><a href="index.html#about">Company Info</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 The Wall Company India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
