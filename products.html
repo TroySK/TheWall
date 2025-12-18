@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Products - The Wall Company India | Pre-Cast Concrete Solutions</title>
     <meta name="description" content="Explore our comprehensive range of pre-cast concrete wall products including boundary walls, retaining walls, partition walls, and sound barriers. High-quality, durable solutions for every application.">
     <meta name="keywords" content="pre-cast concrete products, boundary walls, retaining walls, partition walls, sound barriers, concrete panels, wall systems">
@@ -16,6 +16,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional mobile fixes for products page */
+        @media (max-width: 768px) {
+            .product-card.detailed {
+                display: block;
+            }
+            
+            .product-image,
+            .product-info {
+                width: 100% !important;
+            }
+            
+            .product-specs {
+                flex-wrap: wrap;
+            }
+            
+            .product-actions {
+                justify-content: center;
+            }
+            
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-card.detailed .product-info h3 {
+                font-size: 18px;
+            }
+            
+            .product-specs .spec {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">

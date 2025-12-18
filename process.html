@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Process - The Wall Company India</title>
     <meta name="description" content="Discover our streamlined manufacturing process for pre-cast concrete walls. From design to installation, learn how we ensure quality and efficiency at every step.">
     <meta name="keywords" content="pre-cast concrete process, wall manufacturing, concrete production, quality control, installation process">
@@ -16,6 +16,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional mobile fixes for process page */
+        @media (max-width: 768px) {
+            .timeline-step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .timeline-marker {
+                margin-bottom: 12px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .manufacturing-grid,
+            .quality-grid,
+            .installation-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-visual {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .timeline-bar {
+                min-width: 600px;
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .timeline-bar {
+                min-width: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">

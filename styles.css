@@ -66,7 +66,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 16px;
 }
 
 a {
@@ -145,6 +145,10 @@ main > section + section {
     align-items: center;
     justify-content: space-between;
     padding: 16px 0;
+}
+
+.logo {
+    padding-left: var(--spacing-sm);
 }
 
 .logo h1 {
@@ -250,14 +254,15 @@ main > section + section {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 80%;
-    max-width: 350px;
+    width: 100%;
+    max-width: none;
     height: 100vh;
     background-color: var(--white);
     box-shadow: var(--shadow-lg);
     padding: var(--spacing-2xl) var(--spacing-md) var(--spacing-xl);
     transition: left 0.3s ease, background-color 0.3s ease;
     z-index: 2000;
+    overflow-y: auto;
 }
 
 .mobile-nav.active {
@@ -982,11 +987,65 @@ main > section + section {
         margin-top: var(--spacing-xl);
         margin-bottom: var(--spacing-sm);
     }
+
+    /* Ensure no horizontal scroll on mobile */
+    .product-card,
+    .feature-card,
+    .process-step,
+    .customer-card,
+    .contact-item,
+    .calculator,
+    .quote-result {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Fix wall showcase on mobile */
+    .wall-showcase {
+        height: 250px;
+        width: 100%;
+    }
+
+    .wall-panel {
+        width: 150px;
+        height: 225px;
+    }
+
+    .panel-2 {
+        left: 80px;
+        top: 40px;
+    }
+
+    .panel-3 {
+        left: 160px;
+        top: 80px;
+    }
+
+    /* Improve form layout on small screens */
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* Adjust hero content spacing */
+    .cta-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        max-width: 300px;
+        margin: var(--spacing-xs) 0;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 var(--spacing-sm);
+        padding: 0 12px;
     }
 
     .hero-content h1 {
@@ -995,12 +1054,62 @@ main > section + section {
 
     .btn-primary,
     .btn-secondary {
-        padding: 10px 20px;
+        padding: 10px 16px;
         font-size: 14px;
     }
 
     .mobile-nav {
         width: 100%;
+    }
+
+    /* Prevent any horizontal overflow on very small screens */
+    * {
+        max-width: 100%;
+    }
+
+    /* Ensure text doesn't overflow */
+    .hero-subtitle,
+    .section-header p,
+    .feature-card p,
+    .product-info p,
+    .step-content p,
+    .customer-card p {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Reduce hero image size further and prevent overflow */
+    .wall-showcase {
+        overflow: hidden;
+    }
+
+    .wall-panel {
+        width: 120px;
+        height: 180px;
+    }
+
+    .panel-2 {
+        left: 60px;
+        top: 30px;
+    }
+
+    .panel-3 {
+        left: 120px;
+        top: 60px;
+    }
+
+    /* Ensure hero section doesn't overflow */
+    .hero .container {
+        overflow-x: hidden;
+    }
+
+    /* Fix any remaining overflow issues */
+    html, body {
+        overflow-x: hidden;
+    }
+
+    .calculator {
+        padding: var(--spacing-xs);
     }
 }
 
@@ -1020,6 +1129,24 @@ select:focus,
 a:focus {
     outline: 3px solid rgba(37, 99, 235, 0.3);
     outline-offset: 2px;
+}
+
+/* Prevent horizontal overflow on all devices */
+* {
+    box-sizing: border-box;
+}
+
+/* Ensure images and media scale properly */
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Prevent text overflow */
+h1, h2, h3, h4, h5, h6, p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 /* Print styles */

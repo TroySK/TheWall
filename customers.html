@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Customers - The Wall Company India</title>
     <meta name="description" content="Discover how leading construction companies and developers across India trust The Wall Company for their pre-cast concrete wall needs. Read success stories and testimonials.">
     <meta name="keywords" content="pre-cast concrete customers, construction company testimonials, wall solutions case studies, customer success stories">
@@ -16,6 +16,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional mobile fixes for customers page */
+        @media (max-width: 768px) {
+            .testimonials-grid,
+            .case-studies-grid,
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-study-card {
+                display: block;
+            }
+            
+            .case-study-image {
+                height: 200px;
+            }
+            
+            .case-study-content {
+                padding: 16px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-study-image {
+                height: 160px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
