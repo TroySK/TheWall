@@ -533,6 +533,13 @@ main > section + section {
     margin-bottom: 0;
 }
 
+.editable-note {
+    font-size: 12px;
+    color: var(--text-light);
+    font-style: italic;
+    margin-left: 8px;
+}
+
 /* Products Section */
 .products {
     padding: var(--spacing-3xl) 0;

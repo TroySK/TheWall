@@ -77,26 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const quoteResult = document.getElementById('quoteResult');
     const quoteDetails = document.getElementById('quoteDetails');
 
-    // Price configuration
+    // Price configuration for wall types
     const prices = {
-        boundary: { base: 1200, multiplier: 1.0 },
-        retaining: { base: 1500, multiplier: 1.2 },
-        partition: { base: 1000, multiplier: 0.9 },
-        sound: { base: 1800, multiplier: 1.5 }
-    };
-
-    const thicknessMultipliers = {
-        100: 1.0,
-        150: 1.2,
-        200: 1.4,
-        250: 1.6
-    };
-
-    const finishMultipliers = {
-        smooth: 1.0,
-        textured: 1.1,
-        exposed: 1.2,
-        bush: 1.15
+        boundary: 100,
+        exterior: 140,
+        partition: 120
     };
 
     const locationMultipliers = {
@@ -106,30 +91,74 @@ document.addEventListener('DOMContentLoaded', function() {
         west: 1.03
     };
 
+    // Calculate perimeter based on length and breadth
+    function calculatePerimeter(length, breadth) {
+        return 2 * (length + breadth);
+    }
+
+    // Calculate area based on perimeter and height
+    function calculateArea(perimeter, height) {
+        return perimeter * height;
+    }
+
+    // Update perimeter field when length or breadth changes
+    function updatePerimeter() {
+        const length = parseFloat(document.getElementById('length').value);
+        const breadth = parseFloat(document.getElementById('breadth').value);
+        const perimeterInput = document.getElementById('perimeter');
+        
+        if (!isNaN(length) && !isNaN(breadth) && length > 0 && breadth > 0) {
+            const calculatedPerimeter = calculatePerimeter(length, breadth);
+            // Always update the perimeter field in real-time
+            perimeterInput.value = calculatedPerimeter.toFixed(2);
+            // Trigger the area update as well
+            updateArea();
+        } else {
+            // Clear perimeter if inputs are invalid
+            perimeterInput.value = '';
+            updateArea(); // Also clear area
+        }
+    }
+
+    // Update area field when perimeter or height changes
+    function updateArea() {
+        const perimeter = parseFloat(document.getElementById('perimeter').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const areaInput = document.getElementById('area');
+        
+        if (!isNaN(perimeter) && !isNaN(height) && perimeter > 0 && height > 0) {
+            const calculatedArea = calculateArea(perimeter, height);
+            areaInput.value = calculatedArea.toFixed(2);
+            // Trigger cost calculation as well
+            calculateQuote();
+        } else {
+            areaInput.value = '';
+        }
+    }
+
     function calculateQuote() {
         const wallType = document.getElementById('wallType').value;
-        const length = parseFloat(document.getElementById('length').value);
+        const perimeter = parseFloat(document.getElementById('perimeter').value);
         const height = parseFloat(document.getElementById('height').value);
-        const thickness = document.getElementById('thickness').value;
-        const finish = document.getElementById('finish').value;
         const location = document.getElementById('location').value;
 
-        if (!wallType || !length || !height || !thickness || !finish || !location) {
+        if (!wallType || !perimeter || !height || !location) {
             quoteResult.querySelector('.cost-value').textContent = '₹0';
             quoteDetails.innerHTML = '';
             return;
         }
 
         // Calculate area
-        const area = length * height;
+        const area = calculateArea(perimeter, height);
 
-        // Get base price
-        const basePrice = prices[wallType].base;
-        const typeMultiplier = prices[wallType].multiplier;
+        // Get base price per square meter
+        const basePrice = prices[wallType];
+
+        // Get location multiplier
+        const locationMultiplier = locationMultipliers[location];
 
         // Calculate total price
-        const pricePerSqm = basePrice * typeMultiplier * thicknessMultipliers[thickness] * finishMultipliers[finish] * locationMultipliers[location];
-        const totalPrice = area * pricePerSqm;
+        const totalPrice = area * basePrice * locationMultiplier;
 
         // Display result
         quoteResult.querySelector('.cost-value').textContent = `₹${totalPrice.toLocaleString('en-IN')}`;
@@ -139,12 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="quote-breakdown">
                 <h4>Cost Breakdown:</h4>
                 <ul>
-                    <li>Wall Type: ${wallType.charAt(0).toUpperCase() + wallType.slice(1)} (${typeMultiplier.toFixed(2)}x)</li>
-                    <li>Dimensions: ${length}m × ${height}m = ${area.toFixed(2)} sqm</li>
-                    <li>Thickness: ${thickness}mm (${thicknessMultipliers[thickness].toFixed(2)}x)</li>
-                    <li>Finish: ${finish.charAt(0).toUpperCase() + finish.slice(1)} (${finishMultipliers[finish].toFixed(2)}x)</li>
-                    <li>Location: ${location.charAt(0).toUpperCase() + location.slice(1)} (${locationMultipliers[location].toFixed(2)}x)</li>
-                    <li>Base Rate: ₹${basePrice.toLocaleString('en-IN')}/sqm</li>
+                    <li>Wall Type: ${wallType.charAt(0).toUpperCase() + wallType.slice(1)}</li>
+                    <li>Perimeter: ${perimeter.toFixed(2)} feet</li>
+                    <li>Height: ${height} feet</li>
+                    <li>Area: ${area.toFixed(2)} sq.ft</li>
+                    <li>Location: ${location.charAt(0).toUpperCase() + location.slice(1)} (${locationMultiplier.toFixed(2)}x)</li>
+                    <li>Base Rate: ₹${basePrice}/sq.ft</li>
                 </ul>
                 <p class="disclaimer">Note: This is an estimated price. Contact us for exact pricing including taxes and installation.</p>
             </div>
@@ -157,6 +186,32 @@ document.addEventListener('DOMContentLoaded', function() {
             calculateQuote();
         });
     }
+
+    // Add event listeners for real-time calculations
+    const lengthInput = document.getElementById('length');
+    const breadthInput = document.getElementById('breadth');
+    const perimeterInput = document.getElementById('perimeter');
+    const heightInput = document.getElementById('height');
+
+    // Update perimeter when length or breadth changes
+    if (lengthInput && breadthInput) {
+        lengthInput.addEventListener('input', updatePerimeter);
+        breadthInput.addEventListener('input', updatePerimeter);
+    }
+
+    // Update area when perimeter or height changes
+    if (perimeterInput && heightInput) {
+        perimeterInput.addEventListener('input', updateArea);
+        heightInput.addEventListener('input', updateArea);
+    }
+
+    // Debounced calculation for real-time updates
+    const debouncedCalculate = debounce(calculateQuote, 300);
+
+    // Add real-time calculation on input changes
+    document.querySelectorAll('#quoteForm input, #quoteForm select').forEach(input => {
+        input.addEventListener('input', debouncedCalculate);
+    });
 
     // Contact Form
     const contactForm = document.getElementById('contactForm');
@@ -248,14 +303,6 @@ document.addEventListener('DOMContentLoaded', function() {
             imageObserver.observe(img);
         });
     }
-
-    // Debounced calculation for real-time updates
-    const debouncedCalculate = debounce(calculateQuote, 300);
-
-    // Add real-time calculation on input changes
-    document.querySelectorAll('#quoteForm input, #quoteForm select').forEach(input => {
-        input.addEventListener('input', debouncedCalculate);
-    });
 
     // Accessibility: Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {

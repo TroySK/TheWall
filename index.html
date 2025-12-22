@@ -112,7 +112,7 @@
                 <div class="quote-content">
                     <div class="quote-info">
                         <h2>Instant Quote Calculator</h2>
-                        <p>Get an instant estimate for your pre-cast wall project</p>
+                        <p>Get an instant estimate for your wall project</p>
                     </div>
                     <div class="calculator">
                         <form id="quoteForm">
@@ -121,39 +121,32 @@
                                 <select id="wallType" required>
                                     <option value="">Select wall type</option>
                                     <option value="boundary">Boundary Wall</option>
-                                    <option value="retaining">Retaining Wall</option>
+                                    <option value="exterior">Exterior Wall</option>
                                     <option value="partition">Partition Wall</option>
-                                    <option value="sound">Sound Barrier</option>
                                 </select>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="length">Length (meters)</label>
+                                    <label for="length">Length (feet)</label>
                                     <input type="number" id="length" min="1" step="0.1" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="height">Height (meters)</label>
-                                    <input type="number" id="height" min="1" step="0.1" required>
+                                    <label for="breadth">Breadth (feet)</label>
+                                    <input type="number" id="breadth" min="1" step="0.1" required>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="perimeter">Perimeter (feet) <span class="editable-note">(editable)</span></label>
+                                <input type="number" id="perimeter" min="1" step="0.1" required>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="thickness">Thickness (mm)</label>
-                                    <select id="thickness" required>
-                                        <option value="100">100 mm</option>
-                                        <option value="150">150 mm</option>
-                                        <option value="200">200 mm</option>
-                                        <option value="250">250 mm</option>
-                                    </select>
+                                    <label for="height">Height (feet)</label>
+                                    <input type="number" id="height" min="1" step="0.1" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="finish">Surface Finish</label>
-                                    <select id="finish" required>
-                                        <option value="smooth">Smooth</option>
-                                        <option value="textured">Textured</option>
-                                        <option value="exposed">Exposed Aggregate</option>
-                                        <option value="bush">Bush Hammered</option>
-                                    </select>
+                                    <label for="area">Area (sq.ft) <span class="editable-note">(calculated)</span></label>
+                                    <input type="number" id="area" min="0" step="0.01" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -172,7 +165,7 @@
                             <h3>Estimated Cost</h3>
                             <div class="cost-display">
                                 <span class="cost-value">₹0</span>
-                                <span class="cost-note">Excluding taxes and installation</span>
+                                <span class="cost-note">Excluding taxes</span>
                             </div>
                             <div class="quote-details" id="quoteDetails"></div>
                         </div>
