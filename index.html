@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -73,9 +74,9 @@
                 </div>
                 <div class="hero-image">
                     <div class="wall-showcase">
-                        <div class="wall-panel panel-1"></div>
-                        <div class="wall-panel panel-2"></div>
-                        <div class="wall-panel panel-3"></div>
+                        <div class="wall-panel panel-1"><img src="images/wall1.jpg" alt="The Wall"></div>
+                        <div class="wall-panel panel-2"><img src="images/wall2.jpg" alt="The Wall"></div>
+                        <div class="wall-panel panel-3"><img src="images/wall3.jpg" alt="The Wall"></div>
                     </div>
                 </div>
             </div>
@@ -169,8 +170,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn-primary">Calculate Quote</button>
+                                <button type="button" id="downloadQuoteBtn" class="btn-primary">Download Quote PDF</button>
                             </form>
+                            <div id="customerInfoForm" class="customer-info-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="customerName">Your Name</label>
+                                    <input type="text" id="customerName" name="customerName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerPhone">Phone Number</label>
+                                    <input type="tel" id="customerPhone" name="customerPhone" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" id="generatePDFBtn" class="btn-primary">Generate PDF</button>
+                                    <button type="button" id="cancelPDFBtn" class="btn-secondary">Cancel</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="quote-result" id="quoteResult">
                             <h3>Estimated Cost</h3>
@@ -197,15 +212,15 @@
                 <div class="products-grid">
                     <div class="product-card">
                         <div class="product-image">
-                            <div class="product-type boundary"></div>
+                            <div class="product-type boundary"><img src="images/boundary.jpg" alt="The Wall - Boundary Wall"></div>
                         </div>
                         <div class="product-info">
                             <h3>Boundary Walls</h3>
                             <p>Secure and aesthetically pleasing boundary solutions for residential and commercial properties.</p>
                             <ul class="product-features">
-                                <li>✓ High security</li>
-                                <li>✓ Various designs</li>
-                                <li>✓ Quick installation</li>
+                                <li>High security</li>
+                                <li>Various designs</li>
+                                <li>Quick installation</li>
                             </ul>
                             <div class="product-actions">
                                 <a href="products.html" class="btn-primary">View Details</a>
@@ -215,15 +230,15 @@
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <div class="product-type retaining"></div>
+                            <div class="product-type retaining"><img src="images/exterior.jpg" alt="The Wall - Exterior Wall"></div>
                         </div>
                         <div class="product-info">
                             <h3>Retaining Walls</h3>
                             <p>Engineered solutions for soil retention and slope stabilization.</p>
                             <ul class="product-features">
-                                <li>✓ Structural integrity</li>
-                                <li>✓ Drainage systems</li>
-                                <li>✓ Custom designs</li>
+                                <li>Structural integrity</li>
+                                <li>Drainage systems</li>
+                                <li>Custom designs</li>
                             </ul>
                             <div class="product-actions">
                                 <a href="products.html" class="btn-primary">View Details</a>
@@ -233,15 +248,15 @@
                     </div>
                     <div class="product-card">
                         <div class="product-image">
-                            <div class="product-type partition"></div>
+                            <div class="product-type partition"><img src="images/partition.jpg" alt="The Wall - Partition Wall"></div>
                         </div>
                         <div class="product-info">
                             <h3>Partition Walls</h3>
                             <p>Space division solutions for home, commercial and industrial buildings.</p>
                             <ul class="product-features">
-                                <li>✓ Sound insulation</li>
-                                <li>✓ Fire resistant</li>
-                                <li>✓ Modular design</li>
+                                <li>Sound insulation</li>
+                                <li>Fire resistant</li>
+                                <li>Modular design</li>
                             </ul>
                             <div class="product-actions">
                                 <a href="products.html" class="btn-primary">View Details</a>
@@ -254,12 +269,12 @@
                             <div class="product-type sound"></div>
                         </div>
                         <div class="product-info">
-                            <h3>Sound Barriers</h3>
-                            <p>Effective noise reduction solutions for highways and industrial areas.</p>
+                            <h3>Flooring Solutions</h3>
+                            <p>Precast flooring solutions for various applications. Heavy duty and durable.</p>
                             <ul class="product-features">
-                                <li>✓ Noise reduction</li>
-                                <li>✓ Durable</li>
-                                <li>✓ Custom heights</li>
+                                <li>Aesthetically appealing</li>
+                                <li>Durable</li>
+                                <li>Custom heights</li>
                             </ul>
                             <div class="product-actions">
                                 <a href="products.html" class="btn-primary">View Details</a>
@@ -369,7 +384,9 @@
                         </div>
                     </div>
                     <div class="about-image">
-                        <div class="factory-showcase"></div>
+                        <div class="factory-showcase">
+                            <img src="images/wall.jpg" alt="The Wall Company India">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -385,11 +402,11 @@
                     <div class="contact-info">
                         <div class="contact-item">
                             <h3>📍 Address</h3>
-                            <p>The Wall, Lalman <br>Sukna, West Bengal 734014<br>India</p>
+                            <p>The Wall, Lalman <br>Gossainpur, West Bengal 734014<br>India</p>
                         </div>
                         <div class="contact-item">
                             <h3>📞 Phone</h3>
-                            <p>+91 98765 43210<br>+91 98765 43211</p>
+                            <p><a href="tel:+91 74780 55541">+91 74780 55541</a></p>
                         </div>
                         <div class="contact-item">
                             <h3>✉️ Email</h3>
@@ -463,7 +480,7 @@
                         <li><a href="#">Boundary Walls</a></li>
                         <li><a href="#">Retaining Walls</a></li>
                         <li><a href="#">Partition Walls</a></li>
-                        <li><a href="#">Sound Barriers</a></li>
+                        <li><a href="#">Flooring Solutions</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

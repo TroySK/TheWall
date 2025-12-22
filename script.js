@@ -1,6 +1,6 @@
 // Utility functions
 function formatCurrency(amount) {
-    return `₹${amount.toLocaleString('en-IN')}`;
+    return `Rs.${amount.toLocaleString('en-IN')}`;
 }
 
 function debounce(func, wait) {
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             distanceValue.textContent = '0.00';
         }
         if (extraCostValue) {
-            extraCostValue.textContent = '₹0';
+            extraCostValue.textContent = 'Rs.0';
         }
     }
 
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const extraCost = shippingDistance * area * 2;
         
         if (extraCostValue) {
-            extraCostValue.textContent = `₹${Math.round(extraCost).toLocaleString('en-IN')}`;
+            extraCostValue.textContent = `Rs.${Math.round(extraCost).toLocaleString('en-IN')}`;
         }
         
         // Trigger quote recalculation to include extra cost
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
             areaInput.value = '';
             // Clear extra cost if area is invalid
             if (extraCostValue) {
-                extraCostValue.textContent = '₹0';
+                extraCostValue.textContent = 'Rs.0';
             }
         }
     }
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const height = parseFloat(document.getElementById('height').value);
 
         if (!wallType || !perimeter || !height) {
-            quoteResult.querySelector('.cost-value').textContent = '₹0';
+            quoteResult.querySelector('.cost-value').textContent = 'Rs.0';
             quoteDetails.innerHTML = '';
             return;
         }
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalPrice = baseTotalPrice + extraCost;
 
         // Display result (rounded to integer)
-        quoteResult.querySelector('.cost-value').textContent = `₹${Math.round(totalPrice).toLocaleString('en-IN')}`;
+        quoteResult.querySelector('.cost-value').textContent = `Rs.${Math.round(totalPrice).toLocaleString('en-IN')}`;
         
         // Display details (all prices rounded to integers)
         quoteDetails.innerHTML = `
@@ -322,15 +322,215 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Perimeter: ${perimeter.toFixed(2)} feet</li>
                     <li>Height: ${height} feet</li>
                     <li>Area: ${area.toFixed(2)} sq.ft</li>
-                    <li>Base Rate: ₹${basePrice}/sq.ft</li>
-                    <li>Base Cost: ₹${Math.round(baseTotalPrice).toLocaleString('en-IN')}</li>
+                    <li>Base Rate: Rs.${basePrice}/sq.ft</li>
+                    <li>Base Cost: Rs.${Math.round(baseTotalPrice).toLocaleString('en-IN')}</li>
                     <li>Distance: ${currentDistance.toFixed(2)} km</li>
                     <li>Shipping Distance: ${Math.max(0, currentDistance - 10).toFixed(2)} km (free up to 10 km)</li>
-                    <li>Shipping Cost: ₹${Math.round(extraCost).toLocaleString('en-IN')}</li>
+                    <li>Shipping Cost: Rs.${Math.round(extraCost).toLocaleString('en-IN')}</li>
                 </ul>
                 <p class="disclaimer">Note: This is an estimated price. Contact us for exact pricing including taxes and installation.</p>
             </div>
         `;
+    }
+
+    // PDF Generation Function
+    function generatePDFQuote() {
+        // Get the current quote data
+        const wallType = document.getElementById('wallType').value;
+        const perimeter = parseFloat(document.getElementById('perimeter').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const area = calculateArea(perimeter, height);
+        const basePrice = prices[wallType];
+        const baseTotalPrice = area * basePrice;
+        const shippingDistance = Math.max(0, currentDistance - 10);
+        const extraCost = shippingDistance * area * 2;
+        const totalPrice = baseTotalPrice + extraCost;
+
+        // Check if all required fields are filled
+        if (!wallType || !perimeter || !height || !area) {
+            alert('Please fill in all required fields to generate a quote.');
+            return;
+        }
+
+        // Show customer information form
+        showCustomerInfoForm();
+    }
+
+    // Show customer information form
+    function showCustomerInfoForm() {
+        const customerForm = document.getElementById('customerInfoForm');
+        const customerNameInput = document.getElementById('customerName');
+        const customerPhoneInput = document.getElementById('customerPhone');
+
+        if (customerForm) {
+            customerForm.style.display = 'block';
+            
+            // Focus on name field
+            if (customerNameInput) {
+                customerNameInput.focus();
+            }
+        }
+    }
+
+    // Hide customer information form
+    function hideCustomerInfoForm() {
+        const customerForm = document.getElementById('customerInfoForm');
+        if (customerForm) {
+            customerForm.style.display = 'none';
+        }
+    }
+
+    // Generate PDF with customer information
+    function generatePDFWithCustomerInfo() {
+        const customerNameInput = document.getElementById('customerName');
+        const customerPhoneInput = document.getElementById('customerPhone');
+
+        const customerName = customerNameInput ? customerNameInput.value.trim() : '';
+        const customerPhone = customerPhoneInput ? customerPhoneInput.value.trim() : '';
+
+        if (!customerName) {
+            alert('Please enter your name.');
+            customerNameInput.focus();
+            return;
+        }
+
+        if (!customerPhone) {
+            alert('Please enter your phone number.');
+            customerPhoneInput.focus();
+            return;
+        }
+
+        // Get the current quote data
+        const wallType = document.getElementById('wallType').value;
+        const perimeter = parseFloat(document.getElementById('perimeter').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const area = calculateArea(perimeter, height);
+        const basePrice = prices[wallType];
+        const baseTotalPrice = area * basePrice;
+        const shippingDistance = Math.max(0, currentDistance - 10);
+        const extraCost = shippingDistance * area * 2;
+        const totalPrice = baseTotalPrice + extraCost;
+
+        // Import jsPDF
+        const { jsPDF } = window.jspdf;
+
+        // Create PDF document
+        const doc = new jsPDF();
+        
+        // Set up colors
+        const primaryColor = '#2563eb';
+        const textColor = '#0f172a';
+        const lightColor = '#f8fafc';
+
+        // Add company header
+        doc.setFillColor(primaryColor);
+        doc.rect(0, 0, 210, 40, 'F'); // Header background
+
+        // Company name and logo
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(20);
+        doc.setFont(undefined, 'bold');
+        doc.text('The Wall Company India', 20, 25);
+
+        // Company details section
+        doc.setTextColor(textColor);
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text('Address: Lalmom, Gossainpur, West Bengal - 734014', 20, 50);
+        doc.text('Phone: +91 747-8055541', 20, 56);
+        doc.text('Email: thewallcompanygroup@gmail.com', 20, 62);
+
+        // Add separator
+        doc.setDrawColor(primaryColor);
+        doc.setLineWidth(1);
+        doc.line(20, 70, 190, 70);
+
+        // Title
+        doc.setFontSize(18);
+        doc.setFont(undefined, 'bold');
+        doc.text('QUOTATION', 20, 85);
+
+        // Date
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Date: ${dateStr}`, 140, 85);
+
+        // Customer Information Section
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Customer Information:', 20, 100);
+
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Name: ${customerName}`, 20, 110);
+        doc.text(`Phone: ${customerPhone}`, 20, 118);
+
+        // Quote Details Section
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Quote Details:', 20, 150);
+
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Wall Type: ${wallType.charAt(0).toUpperCase() + wallType.slice(1)}`, 20, 160);
+        doc.text(`Perimeter: ${perimeter.toFixed(2)} feet`, 20, 168);
+        doc.text(`Height: ${height} feet`, 20, 176);
+        doc.text(`Area: ${area.toFixed(2)} sq.ft`, 20, 184);
+        doc.text(`Base Rate: Rs.${basePrice}/sq.ft`, 20, 192);
+
+        // Add separator
+        doc.setDrawColor('#e2e8f0');
+        doc.line(20, 200, 190, 200);
+
+        // Cost Breakdown
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Cost Breakdown:', 20, 210);
+
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Base Cost: Rs.${Math.round(baseTotalPrice).toLocaleString('en-IN')}`, 20, 220);
+        doc.text(`Distance: ${currentDistance.toFixed(2)} km`, 20, 228);
+        doc.text(`Shipping Distance: ${Math.max(0, currentDistance - 10).toFixed(2)} km`, 20, 236);
+        doc.text(`Shipping Cost: Rs.${Math.round(extraCost).toLocaleString('en-IN')}`, 20, 244);
+
+        // Add separator
+        doc.setDrawColor('#e2e8f0');
+        doc.line(20, 252, 190, 252);
+
+        // Total
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.text(`Total Amount: Rs.${Math.round(totalPrice).toLocaleString('en-IN')}`, 20, 265);
+
+        // Terms and conditions
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text('Terms & Conditions:', 20, 280);
+        doc.text('- This is an estimated price excluding taxes', 20, 288);
+        doc.text('- Valid for 30 days from the date of issue', 20, 296);
+        doc.text('- Installation charges may apply', 20, 304);
+        doc.text('- Payment terms: 50% advance, 50% on delivery', 20, 312);
+
+        // Footer
+        doc.setFillColor(primaryColor);
+        doc.rect(0, 320, 210, 20, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(9);
+        doc.text('Thank you for choosing The Wall Company India', 20, 334);
+        doc.text('For inquiries, contact us at +91 747-8055541', 110, 334);
+
+        // Generate filename with date
+        const filename = `Quote_${wallType}_${dateStr.replace(/\//g, '-')}.pdf`;
+
+        // Save the PDF
+        doc.save(filename);
     }
 
     if (quoteForm) {
@@ -338,6 +538,24 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             calculateQuote();
         });
+    }
+
+    // Add event listener for download button
+    const downloadQuoteBtn = document.getElementById('downloadQuoteBtn');
+    if (downloadQuoteBtn) {
+        downloadQuoteBtn.addEventListener('click', generatePDFQuote);
+    }
+
+    // Add event listeners for customer info form buttons
+    const generatePDFBtn = document.getElementById('generatePDFBtn');
+    const cancelPDFBtn = document.getElementById('cancelPDFBtn');
+
+    if (generatePDFBtn) {
+        generatePDFBtn.addEventListener('click', generatePDFWithCustomerInfo);
+    }
+
+    if (cancelPDFBtn) {
+        cancelPDFBtn.addEventListener('click', hideCustomerInfoForm);
     }
 
     // Initialize map
@@ -441,6 +659,78 @@ document.addEventListener('DOMContentLoaded', function() {
             header.style.background = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)';
         }
     });
+
+    // Quote result scroll behavior for desktop
+    function handleQuoteResultScroll() {
+        // Only apply on desktop (screen width > 1024px)
+        if (window.innerWidth <= 1024) {
+            return;
+        }
+
+        const quoteResult = document.getElementById('quoteResult');
+        const quoteSection = document.getElementById('quote');
+        const quoteContent = quoteSection ? quoteSection.querySelector('.quote-content') : null;
+
+        if (!quoteResult || !quoteSection || !quoteContent) {
+            return;
+        }
+
+        // Get positions
+        const quoteSectionRect = quoteSection.getBoundingClientRect();
+        const quoteContentRect = quoteContent.getBoundingClientRect();
+        const quoteResultRect = quoteResult.getBoundingClientRect();
+        
+        // Calculate boundaries
+        const viewportHeight = window.innerHeight;
+        const sectionTop = quoteSectionRect.top + window.scrollY;
+        const sectionBottom = quoteSectionRect.bottom + window.scrollY;
+        const contentTop = quoteContentRect.top + window.scrollY;
+        const contentBottom = quoteContentRect.bottom + window.scrollY;
+        
+        // Calculate scroll position
+        const scrollTop = window.scrollY;
+        const scrollBottom = scrollTop + viewportHeight;
+
+        // Check if we're within the quote section
+        if (scrollTop >= sectionTop && scrollTop < sectionBottom) {
+            // We're in the quote section, allow sticky behavior
+            quoteResult.style.position = 'sticky';
+            quoteResult.style.top = '100px';
+            quoteResult.style.maxHeight = `calc(100vh - 200px)`;
+            quoteResult.style.overflowY = 'auto';
+        } else {
+            // We're outside the quote section, reset positioning
+            quoteResult.style.position = 'relative';
+            quoteResult.style.top = 'auto';
+            quoteResult.style.maxHeight = 'none';
+            quoteResult.style.overflowY = 'visible';
+        }
+    }
+
+    // Debounced scroll handler
+    const debouncedQuoteScroll = debounce(handleQuoteResultScroll, 10);
+
+    // Initialize and add scroll listener
+    handleQuoteResultScroll();
+    window.addEventListener('scroll', debouncedQuoteScroll);
+    window.addEventListener('resize', debouncedQuoteScroll);
+    
+    // Additional mobile-specific handling to ensure quote result doesn't interfere
+    function handleMobileQuoteResult() {
+        if (window.innerWidth <= 1024) {
+            const quoteResult = document.getElementById('quoteResult');
+            if (quoteResult) {
+                quoteResult.style.position = 'relative';
+                quoteResult.style.top = 'auto';
+                quoteResult.style.maxHeight = 'none';
+                quoteResult.style.overflowY = 'visible';
+            }
+        }
+    }
+    
+    // Ensure mobile behavior is correct on load and resize
+    handleMobileQuoteResult();
+    window.addEventListener('resize', handleMobileQuoteResult);
 
     // Lazy loading for images (if we add any in the future)
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
