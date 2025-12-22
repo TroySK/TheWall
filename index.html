@@ -115,61 +115,63 @@
                         <h2>Instant Quote Calculator</h2>
                         <p>Get an instant estimate for your wall project</p>
                     </div>
-                    <div class="calculator">
-                        <form id="quoteForm">
-                            <div class="form-group">
-                                <label for="wallType">Wall Type</label>
-                                <select id="wallType" required>
-                                    <option value="">Select wall type</option>
-                                    <option value="boundary">Boundary Wall</option>
-                                    <option value="exterior">Exterior Wall</option>
-                                    <option value="partition">Partition Wall</option>
-                                </select>
-                            </div>
-                            <div class="form-row">
+                    <div class="calculator-container">
+                        <div class="calculator">
+                            <form id="quoteForm">
                                 <div class="form-group">
-                                    <label for="length">Length (feet)</label>
-                                    <input type="number" id="length" min="1" step="0.1" required>
+                                    <label for="wallType">Wall Type</label>
+                                    <select id="wallType" required>
+                                        <option value="">Select wall type</option>
+                                        <option value="boundary">Boundary Wall</option>
+                                        <option value="exterior">Exterior Wall</option>
+                                        <option value="partition">Partition Wall</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="length">Length (feet)</label>
+                                        <input type="number" id="length" min="1" step="0.1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="breadth">Breadth (feet)</label>
+                                        <input type="number" id="breadth" min="1" step="0.1" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="breadth">Breadth (feet)</label>
-                                    <input type="number" id="breadth" min="1" step="0.1" required>
+                                    <label for="perimeter">Perimeter (feet) <span class="editable-note">(editable)</span></label>
+                                    <input type="number" id="perimeter" min="1" step="0.1" required>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="perimeter">Perimeter (feet) <span class="editable-note">(editable)</span></label>
-                                <input type="number" id="perimeter" min="1" step="0.1" required>
-                            </div>
-                            <div class="form-row">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="height">Height (feet)</label>
+                                        <input type="number" id="height" min="1" step="0.1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="area">Area (sq.ft) <span class="editable-note">(calculated)</span></label>
+                                        <input type="number" id="area" min="0" step="0.01" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label for="height">Height (feet)</label>
-                                    <input type="number" id="height" min="1" step="0.1" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="area">Area (sq.ft) <span class="editable-note">(calculated)</span></label>
-                                    <input type="number" id="area" min="0" step="0.01" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="locationMap">Project Location</label>
-                                <div class="map-container">
-                                    <div id="map" class="map"></div>
-                                    <div class="map-instructions">
-                                        <p>Click on the map to place your property marker</p>
-                                        <div class="distance-info">
-                                            <span class="distance-label">Distance from reference point:</span>
-                                            <span id="distanceValue" class="distance-value">0.00</span>
-                                            <span class="distance-unit">km</span>
-                                        </div>
-                                        <div class="extra-cost-info">
-                                            <span class="extra-cost-label">Shipping:</span>
-                                            <span id="extraCostValue" class="extra-cost-value">₹0</span>
+                                    <label for="locationMap">Project Location</label>
+                                    <div class="map-container">
+                                        <div id="map" class="map"></div>
+                                        <div class="map-instructions">
+                                            <p>Click on the map to place your property marker</p>
+                                            <div class="distance-info">
+                                                <span class="distance-label">Distance from reference point:</span>
+                                                <span id="distanceValue" class="distance-value">0.00</span>
+                                                <span class="distance-unit">km</span>
+                                            </div>
+                                            <div class="extra-cost-info">
+                                                <span class="extra-cost-label">Shipping:</span>
+                                                <span id="extraCostValue" class="extra-cost-value">₹0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn-primary">Calculate Quote</button>
-                        </form>
+                                <button type="submit" class="btn-primary">Calculate Quote</button>
+                            </form>
+                        </div>
                         <div class="quote-result" id="quoteResult">
                             <h3>Estimated Cost</h3>
                             <div class="cost-display">
