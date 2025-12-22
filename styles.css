@@ -1217,3 +1217,103 @@ h1, h2, h3, h4, h5, h6, p {
         padding: 0;
     }
 }
+
+/* Map Styles */
+.map-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.map {
+    height: 400px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    background-color: var(--white);
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.map-instructions {
+    background-color: var(--card-bg);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease;
+}
+
+.map-instructions p {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.distance-info, .extra-cost-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.distance-label, .extra-cost-label {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.distance-value, .extra-cost-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+.distance-unit {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+/* Leaflet map controls styling */
+.leaflet-control-attribution {
+    background: transparent !important;
+    color: var(--text-light) !important;
+    font-size: 12px !important;
+}
+
+.leaflet-control-zoom {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+}
+
+.leaflet-control-zoom a {
+    background-color: var(--card-bg) !important;
+    color: var(--text-dark) !important;
+    border-radius: 6px !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+/* Map marker styling */
+.leaflet-marker-icon {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Responsive map styles */
+@media (max-width: 768px) {
+    .map {
+        height: 300px;
+    }
+    
+    .map-instructions {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .map {
+        height: 250px;
+    }
+}

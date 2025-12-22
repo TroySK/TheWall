@@ -84,12 +84,153 @@ document.addEventListener('DOMContentLoaded', function() {
         partition: 120
     };
 
-    const locationMultipliers = {
-        north: 1.0,
-        south: 1.05,
-        east: 1.02,
-        west: 1.03
+    // Reference point coordinates (26°41'19.2"N 88°20'57.6"E)
+    const REFERENCE_POINT = {
+        lat: 26.6886667, // 26°41'19.2"
+        lng: 88.3493333  // 88°20'57.6"
     };
+
+    // Map and marker variables
+    let map = null;
+    let marker = null;
+    let distanceValue = null;
+    let extraCostValue = null;
+    let currentDistance = 0;
+
+    // Initialize map when DOM is ready
+    function initMap() {
+        // Initialize the map centered at the reference point
+        map = L.map('map').setView([REFERENCE_POINT.lat, REFERENCE_POINT.lng], 12);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add reference point marker
+        const referenceMarker = L.marker([REFERENCE_POINT.lat, REFERENCE_POINT.lng], {
+            draggable: false,
+            icon: L.icon({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+        }).addTo(map);
+
+        referenceMarker.bindPopup("<b>The Wall - Factory</b><br>26°41'19.2\"N 88°20'57.6\"E").openPopup();
+
+        // Add click event listener to place user marker
+        map.on('click', function(e) {
+            placeMarker(e.latlng);
+        });
+
+        // Initialize distance and cost display elements
+        distanceValue = document.getElementById('distanceValue');
+        extraCostValue = document.getElementById('extraCostValue');
+
+        // Add a circle around the reference point to show the area
+        L.circle([REFERENCE_POINT.lat, REFERENCE_POINT.lng], {
+            color: 'blue',
+            fillColor: '#30f',
+            fillOpacity: 0.1,
+            radius: 5000 // 5km radius
+        }).addTo(map);
+        
+        // Initialize distance and cost to zero since no property marker is placed yet
+        if (distanceValue) {
+            distanceValue.textContent = '0.00';
+        }
+        if (extraCostValue) {
+            extraCostValue.textContent = '₹0';
+        }
+    }
+
+    // Place marker on map and calculate distance
+    function placeMarker(latlng) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker(latlng, {
+            draggable: true,
+            icon: L.icon({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+        }).addTo(map);
+
+        // Bind popup with coordinates
+        const lat = latlng.lat !== undefined ? latlng.lat : latlng[0];
+        const lng = latlng.lng !== undefined ? latlng.lng : latlng[1];
+        marker.bindPopup(`<b>Property Location</b><br>Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
+
+        // Calculate distance and update display
+        calculateDistance(latlng);
+
+        // Add drag event listener to update distance when marker is moved
+        marker.on('dragend', function(e) {
+            calculateDistance(e.target.getLatLng());
+        });
+    }
+
+    // Calculate road distance using Haversine formula
+    function calculateDistance(latlng) {
+        const R = 6371; // Earth's radius in kilometers
+        
+        const lat1 = REFERENCE_POINT.lat * Math.PI / 180;
+        const lat2 = (latlng.lat !== undefined ? latlng.lat : latlng[0]) * Math.PI / 180;
+        const deltaLat = ((latlng.lat !== undefined ? latlng.lat : latlng[0]) - REFERENCE_POINT.lat) * Math.PI / 180;
+        const deltaLng = ((latlng.lng !== undefined ? latlng.lng : latlng[1]) - REFERENCE_POINT.lng) * Math.PI / 180;
+
+        const a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                  Math.cos(lat1) * Math.cos(lat2) *
+                  Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
+        
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+
+        currentDistance = distance;
+        
+        // Update distance display
+        if (distanceValue) {
+            distanceValue.textContent = distance.toFixed(2);
+        }
+
+        // Calculate extra cost (Rs. 2 per sq. ft for every KM extra)
+        updateExtraCost();
+        
+        // Update map view to show both markers
+        const lat = latlng.lat !== undefined ? latlng.lat : latlng[0];
+        const lng = latlng.lng !== undefined ? latlng.lng : latlng[1];
+        map.fitBounds([
+            [REFERENCE_POINT.lat, REFERENCE_POINT.lng],
+            [lat, lng]
+        ], { padding: [50, 50] });
+    }
+
+    // Update extra cost based on distance and current area
+    function updateExtraCost() {
+        const areaInput = document.getElementById('area');
+        const area = parseFloat(areaInput.value) || 0;
+        
+        // Shipping cost: Free for first 10 km, then Rs. 2 per sq.ft per km for additional distance
+        const shippingDistance = Math.max(0, currentDistance - 10);
+        const extraCost = shippingDistance * area * 2;
+        
+        if (extraCostValue) {
+            extraCostValue.textContent = `₹${Math.round(extraCost).toLocaleString('en-IN')}`;
+        }
+        
+        // Trigger quote recalculation to include extra cost
+        calculateQuote();
+    }
 
     // Calculate perimeter based on length and breadth
     function calculatePerimeter(length, breadth) {
@@ -131,8 +272,14 @@ document.addEventListener('DOMContentLoaded', function() {
             areaInput.value = calculatedArea.toFixed(2);
             // Trigger cost calculation as well
             calculateQuote();
+            // Also update extra cost based on new area
+            updateExtraCost();
         } else {
             areaInput.value = '';
+            // Clear extra cost if area is invalid
+            if (extraCostValue) {
+                extraCostValue.textContent = '₹0';
+            }
         }
     }
 
@@ -140,9 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const wallType = document.getElementById('wallType').value;
         const perimeter = parseFloat(document.getElementById('perimeter').value);
         const height = parseFloat(document.getElementById('height').value);
-        const location = document.getElementById('location').value;
 
-        if (!wallType || !perimeter || !height || !location) {
+        if (!wallType || !perimeter || !height) {
             quoteResult.querySelector('.cost-value').textContent = '₹0';
             quoteDetails.innerHTML = '';
             return;
@@ -151,19 +297,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate area
         const area = calculateArea(perimeter, height);
 
-        // Get base price per square meter
+        // Get base price per square foot
         const basePrice = prices[wallType];
 
-        // Get location multiplier
-        const locationMultiplier = locationMultipliers[location];
+        // Calculate base total price
+        const baseTotalPrice = area * basePrice;
 
-        // Calculate total price
-        const totalPrice = area * basePrice * locationMultiplier;
+        // Calculate shipping cost: Free for first 10 km, then Rs. 2 per sq.ft per km for additional distance
+        const shippingDistance = Math.max(0, currentDistance - 10);
+        const extraCost = shippingDistance * area * 2;
 
-        // Display result
-        quoteResult.querySelector('.cost-value').textContent = `₹${totalPrice.toLocaleString('en-IN')}`;
+        // Calculate final total price
+        const totalPrice = baseTotalPrice + extraCost;
+
+        // Display result (rounded to integer)
+        quoteResult.querySelector('.cost-value').textContent = `₹${Math.round(totalPrice).toLocaleString('en-IN')}`;
         
-        // Display details
+        // Display details (all prices rounded to integers)
         quoteDetails.innerHTML = `
             <div class="quote-breakdown">
                 <h4>Cost Breakdown:</h4>
@@ -172,8 +322,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Perimeter: ${perimeter.toFixed(2)} feet</li>
                     <li>Height: ${height} feet</li>
                     <li>Area: ${area.toFixed(2)} sq.ft</li>
-                    <li>Location: ${location.charAt(0).toUpperCase() + location.slice(1)} (${locationMultiplier.toFixed(2)}x)</li>
                     <li>Base Rate: ₹${basePrice}/sq.ft</li>
+                    <li>Base Cost: ₹${Math.round(baseTotalPrice).toLocaleString('en-IN')}</li>
+                    <li>Distance: ${currentDistance.toFixed(2)} km</li>
+                    <li>Shipping Distance: ${Math.max(0, currentDistance - 10).toFixed(2)} km (free up to 10 km)</li>
+                    <li>Shipping Cost: ₹${Math.round(extraCost).toLocaleString('en-IN')}</li>
                 </ul>
                 <p class="disclaimer">Note: This is an estimated price. Contact us for exact pricing including taxes and installation.</p>
             </div>
@@ -185,6 +338,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             calculateQuote();
         });
+    }
+
+    // Initialize map
+    if (document.getElementById('map')) {
+        initMap();
     }
 
     // Add event listeners for real-time calculations

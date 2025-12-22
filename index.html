@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -150,14 +151,22 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="location">Project Location</label>
-                                <select id="location" required>
-                                    <option value="">Select location</option>
-                                    <option value="north">North India</option>
-                                    <option value="south">South India</option>
-                                    <option value="east">East India</option>
-                                    <option value="west">West India</option>
-                                </select>
+                                <label for="locationMap">Project Location</label>
+                                <div class="map-container">
+                                    <div id="map" class="map"></div>
+                                    <div class="map-instructions">
+                                        <p>Click on the map to place your property marker</p>
+                                        <div class="distance-info">
+                                            <span class="distance-label">Distance from reference point:</span>
+                                            <span id="distanceValue" class="distance-value">0.00</span>
+                                            <span class="distance-unit">km</span>
+                                        </div>
+                                        <div class="extra-cost-info">
+                                            <span class="extra-cost-label">Shipping:</span>
+                                            <span id="extraCostValue" class="extra-cost-value">₹0</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn-primary">Calculate Quote</button>
                         </form>
@@ -470,6 +479,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="script.js"></script>
 </body>
 </html>
