@@ -1330,6 +1330,41 @@ h1, h2, h3, h4, h5, h6, p {
     font-size: 14px;
 }
 
+.distance-tooltip {
+    margin-left: 8px;
+    cursor: help;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.distance-tooltip:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.distance-tooltip::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--text-dark);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.distance-tooltip:hover::after {
+    opacity: 1;
+}
+
 /* Leaflet map controls styling */
 .leaflet-control-attribution {
     background: transparent !important;

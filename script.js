@@ -123,8 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
         referenceMarker.bindPopup("<b>The Wall - Factory</b><br>26°41'19.2\"N 88°20'57.6\"E").openPopup();
 
         // Add click event listener to place user marker
-        map.on('click', function(e) {
-            placeMarker(e.latlng);
+        map.on('click', async function(e) {
+            await placeMarker(e.latlng);
         });
 
         // Initialize distance and cost display elements
@@ -148,8 +148,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Debounced distance calculation to prevent multiple rapid API calls
+    const debouncedCalculateDistance = debounce(async (latlng) => {
+        await calculateDistance(latlng);
+    }, 500);
+
     // Place marker on map and calculate distance
-    function placeMarker(latlng) {
+    async function placeMarker(latlng) {
         if (marker) {
             map.removeLayer(marker);
         }
@@ -172,16 +177,62 @@ document.addEventListener('DOMContentLoaded', function() {
         marker.bindPopup(`<b>Property Location</b><br>Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
 
         // Calculate distance and update display
-        calculateDistance(latlng);
+        await debouncedCalculateDistance(latlng);
 
         // Add drag event listener to update distance when marker is moved
-        marker.on('dragend', function(e) {
-            calculateDistance(e.target.getLatLng());
+        marker.on('dragend', async function(e) {
+            await debouncedCalculateDistance(e.target.getLatLng());
         });
     }
 
-    // Calculate road distance using Haversine formula
-    function calculateDistance(latlng) {
+    // Calculate road distance using OSRM routing API
+    async function calculateDistance(latlng) {
+        const lat = latlng.lat !== undefined ? latlng.lat : latlng[0];
+        const lng = latlng.lng !== undefined ? latlng.lng : latlng[1];
+        
+        // Show loading indicator
+        if (distanceValue) {
+            distanceValue.textContent = 'Calculating...';
+        }
+        
+        try {
+            // Use OSRM (OpenStreetMap Routing Machine) API for road distance
+            const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${REFERENCE_POINT.lng},${REFERENCE_POINT.lat};${lng},${lat}?overview=false&alternatives=false`;
+            
+            const response = await fetch(osrmUrl);
+            const data = await response.json();
+            
+            if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
+                // Distance is returned in meters, convert to kilometers
+                const roadDistance = data.routes[0].distance / 1000;
+                currentDistance = roadDistance;
+                
+                // Update distance display
+                if (distanceValue) {
+                    distanceValue.textContent = roadDistance.toFixed(2);
+                }
+                
+                // Calculate extra cost (Rs. 2 per sq. ft for every KM extra)
+                updateExtraCost();
+                
+                // Update map view to show both markers
+                map.fitBounds([
+                    [REFERENCE_POINT.lat, REFERENCE_POINT.lng],
+                    [lat, lng]
+                ], { padding: [50, 50] });
+            } else {
+                // Fallback to Haversine formula if OSRM fails
+                calculateAerialDistance(latlng);
+            }
+        } catch (error) {
+            console.warn('OSRM API failed, falling back to aerial distance:', error);
+            // Fallback to Haversine formula if API fails
+            calculateAerialDistance(latlng);
+        }
+    }
+
+    // Calculate aerial distance using Haversine formula (fallback)
+    function calculateAerialDistance(latlng) {
         const R = 6371; // Earth's radius in kilometers
         
         const lat1 = REFERENCE_POINT.lat * Math.PI / 180;
@@ -334,7 +385,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // PDF Generation Function
-    function generatePDFQuote() {
+    async function generatePDFQuote() {
+        // Check if a location has been selected on the map
+        if (!marker) {
+            alert('Please select your property location on the map to calculate shipping distance.');
+            return;
+        }
+
         // Get the current quote data
         const wallType = document.getElementById('wallType').value;
         const perimeter = parseFloat(document.getElementById('perimeter').value);
@@ -381,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Generate PDF with customer information
-    function generatePDFWithCustomerInfo() {
+    async function generatePDFWithCustomerInfo() {
         const customerNameInput = document.getElementById('customerName');
         const customerPhoneInput = document.getElementById('customerPhone');
 
