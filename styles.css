@@ -1553,6 +1553,199 @@ body.products-page .product-card.detailed .product-info {
     }
 }
 
+/* Responsive styles for customer stats */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .customer-stats {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-number {
+        font-size: 24px;
+    }
+}
+
+/* Responsive styles for testimonials */
+@media (max-width: 1024px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonials {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .testimonial-card {
+        padding: var(--spacing-md);
+    }
+    
+    .testimonial-header {
+        gap: var(--spacing-sm);
+    }
+    
+    .customer-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+    
+    .testimonial-content {
+        padding: var(--spacing-sm);
+    }
+    
+    .testimonial-content p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .customer-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+    
+    .testimonial-content p {
+        font-size: 13px;
+    }
+}
+
+/* Responsive styles for case studies */
+@media (max-width: 1024px) {
+    .case-studies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .case-study-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .case-studies {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .case-studies-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .case-study-image {
+        height: 200px;
+    }
+    
+    .case-study-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .case-study-content {
+        padding: var(--spacing-md);
+    }
+    
+    .case-study-overlay h3 {
+        font-size: 18px;
+    }
+    
+    .case-study-overlay p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .case-study-image {
+        height: 160px;
+    }
+    
+    .case-study-overlay h3 {
+        font-size: 16px;
+    }
+    
+    .case-study-overlay p {
+        font-size: 11px;
+    }
+}
+
+/* Responsive styles for partners */
+@media (max-width: 1024px) {
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .partners {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .partners-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .partner-logo {
+        width: 50px;
+        height: 50px;
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .partner-logo {
+        width: 45px;
+        height: 45px;
+        font-size: 28px;
+    }
+}
+
+/* Responsive styles for CTA section */
+@media (max-width: 768px) {
+    .cta-section {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .cta-content {
+        padding: var(--spacing-xl);
+    }
+    
+    .cta-content h2 {
+        font-size: 24px;
+    }
+    
+    .cta-content p {
+        font-size: 14px;
+    }
+    
+    .cta-buttons {
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-content h2 {
+        font-size: 20px;
+    }
+    
+    .cta-content p {
+        font-size: 13px;
+    }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     * {
@@ -2506,4 +2699,460 @@ h1, h2, h3, h4, h5, h6, p {
     .milestone-time {
         font-size: 8px;
     }
+}
+
+/* Hero Image Customer Showcase */
+.hero-image .customer-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.customer-logo {
+    font-size: 48px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.customer-logo:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Customer Stats Section */
+.customer-stats {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--bg-light);
+    transition: background-color 0.3s ease;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Testimonials Section */
+.testimonials {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--white);
+    transition: background-color 0.3s ease;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.testimonial-card {
+    background-color: var(--card-bg);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+}
+
+.customer-avatar {
+    font-size: 32px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.customer-avatar:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.customer-info {
+    flex: 1;
+}
+
+.customer-info h4 {
+    font-size: 18px;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.customer-info p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.customer-rating {
+    color: #f59e0b;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.testimonial-content {
+    flex: 1;
+    padding: var(--spacing-md);
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.testimonial-content p {
+    color: var(--text-dark);
+    margin-bottom: 0;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.testimonial-project {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.project-tag {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.project-location {
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Case Studies Section */
+.case-studies {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--bg-light);
+    transition: background-color 0.3s ease;
+}
+
+.case-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.case-study-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.case-study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.case-study-image {
+    position: relative;
+    height: 200px;
+    background-color: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.case-study-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    padding: var(--spacing-lg);
+    color: white;
+}
+
+.case-study-overlay h3 {
+    font-size: 20px;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 700;
+}
+
+.case-study-overlay p {
+    font-size: 14px;
+    margin-bottom: 0;
+    opacity: 0.9;
+}
+
+.case-study-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    flex: 1;
+}
+
+.case-study-challenge,
+.case-study-solution,
+.case-study-results {
+    flex: 1;
+}
+
+.case-study-challenge h4,
+.case-study-solution h4,
+.case-study-results h4 {
+    font-size: 16px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    padding-bottom: var(--spacing-xs);
+    transition: border-color 0.3s ease;
+}
+
+.case-study-challenge h4 {
+    color: var(--danger);
+    border-bottom-color: var(--danger);
+}
+
+.case-study-solution h4 {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.case-study-results h4 {
+    color: var(--success);
+    border-bottom-color: var(--success);
+}
+
+.case-study-challenge ul,
+.case-study-solution ul,
+.case-study-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--spacing-xs);
+}
+
+.case-study-challenge li,
+.case-study-solution li,
+.case-study-results li {
+    padding: 6px 0;
+    color: var(--text-light);
+    font-size: 14px;
+    position: relative;
+    padding-left: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.case-study-challenge li:last-child,
+.case-study-solution li:last-child,
+.case-study-results li:last-child {
+    border-bottom: none;
+}
+
+.case-study-challenge li:before {
+    content: "⚠️";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    font-size: 12px;
+}
+
+.case-study-solution li:before {
+    content: "✓";
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+
+.case-study-results li:before {
+    content: "✓";
+    color: var(--success);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+
+/* Partners Section */
+.partners {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--white);
+    transition: background-color 0.3s ease;
+}
+
+.partners-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.partner-card {
+    background-color: var(--card-bg);
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    height: 100%;
+}
+
+.partner-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.partner-logo {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.partner-logo:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.partner-card h4 {
+    font-size: 18px;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.partner-card p {
+    color: var(--text-light);
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--bg-light);
+    transition: background-color 0.3s ease;
+}
+
+.cta-content {
+    text-align: center;
+    background-color: var(--card-bg);
+    padding: var(--spacing-2xl);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.cta-content h2 {
+    font-size: 32px;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+.cta-content p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xl);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
 }
