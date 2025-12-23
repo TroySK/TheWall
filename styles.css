@@ -642,6 +642,24 @@ main > section + section {
     box-shadow: var(--shadow);
 }
 
+/* Products page specific styles - image on top layout */
+body.products-page .product-card.detailed {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+body.products-page .product-card.detailed .product-image {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+}
+
+body.products-page .product-card.detailed .product-info {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+}
+
 .product-type {
     width: 100%;
     height: 200px;
@@ -1157,6 +1175,12 @@ main > section + section {
 
     .product-actions {
         justify-content: center;
+    }
+    
+    /* Ensure products page layout works on small screens */
+    body.products-page .product-card.detailed {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
     }
 }
 

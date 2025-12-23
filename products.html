@@ -20,7 +20,9 @@
         /* Additional mobile fixes for products page */
         @media (max-width: 768px) {
             .product-card.detailed {
-                display: block;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
             }
             
             .product-image,
@@ -55,7 +57,7 @@
         }
     </style>
 </head>
-<body>
+<body class="products-page">
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -220,7 +222,7 @@
                     <div class="products-grid">
                         <div class="product-card detailed">
                             <div class="product-image">
-                                <img src="images/wall.jpg" alt="Paver Blocks">
+                                <img src="images/paver.jpg" alt="Paver Blocks">
                             </div>
                             <div class="product-info">
                                 <h3>Paver Blocks</h3>
@@ -245,7 +247,7 @@
                         </div>
                         <div class="product-card detailed">
                             <div class="product-image">
-                                <img src="images/wall1.jpg" alt="Floor Tiles">
+                                <img src="images/floor.jpg" alt="Floor Tiles">
                             </div>
                             <div class="product-info">
                                 <h3>Floor Tiles</h3>
@@ -281,7 +283,7 @@
                     <div class="products-grid">
                         <div class="product-card detailed">
                             <div class="product-image">
-                                <img src="images/wall2.jpg" alt="Drains">
+                                <img src="images/drain.jpg" alt="Drains">
                             </div>
                             <div class="product-info">
                                 <h3>Drains</h3>
@@ -306,7 +308,7 @@
                         </div>
                         <div class="product-card detailed">
                             <div class="product-image">
-                                <img src="images/wall3.jpg" alt="Pillars">
+                                <img src="images/pillar.jpg" alt="Pillars">
                             </div>
                             <div class="product-info">
                                 <h3>Pillars</h3>
@@ -331,7 +333,7 @@
                         </div>
                         <div class="product-card detailed">
                             <div class="product-image">
-                                <img src="images/boundary.jpg" alt="Prefab Houses">
+                                <img src="images/house.jpg" alt="Prefab Houses">
                             </div>
                             <div class="product-info">
                                 <h3>Prefab Houses</h3>
