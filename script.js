@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Generate PDF with customer information
+    // Generate PDF with customer information and send email
     async function generatePDFWithCustomerInfo() {
         const customerNameInput = document.getElementById('customerName');
         const customerPhoneInput = document.getElementById('customerPhone');
@@ -588,6 +588,99 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Save the PDF
         doc.save(filename);
+
+        // Send email with quote details
+        await sendQuoteEmail(customerName, customerPhone, wallType, perimeter, height, area, basePrice, baseTotalPrice, currentDistance, shippingDistance, extraCost, totalPrice, dateStr);
+    }
+
+    // Send email with quote details using web3forms
+    async function sendQuoteEmail(customerName, customerPhone, wallType, perimeter, height, area, basePrice, baseTotalPrice, distance, shippingDistance, extraCost, totalPrice, dateStr) {
+        // Create a temporary form element for email submission
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = 'https://api.web3forms.com/submit';
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('access_key', 'b277f5ac-4d07-42a0-b504-6281d8b47a6c');
+        formData.append('subject', `New Quote Request - ${customerName}`);
+        
+        // Create email body with all quote details
+        const emailBody = `
+NEW QUOTE REQUEST
+
+Customer Information:
+- Name: ${customerName}
+- Phone: ${customerPhone}
+
+Quote Details:
+- Wall Type: ${wallType.charAt(0).toUpperCase() + wallType.slice(1)}
+- Perimeter: ${perimeter.toFixed(2)} feet
+- Height: ${height} feet
+- Area: ${area.toFixed(2)} sq.ft
+- Base Rate: Rs.${basePrice}/sq.ft
+
+Cost Breakdown:
+- Base Cost: Rs.${Math.round(baseTotalPrice).toLocaleString('en-IN')}
+- Distance: ${distance.toFixed(2)} km
+- Shipping Distance: ${Math.max(0, distance - 10).toFixed(2)} km (free up to 10 km)
+- Shipping Cost: Rs.${Math.round(extraCost).toLocaleString('en-IN')}
+- Total Amount: Rs.${Math.round(totalPrice).toLocaleString('en-IN')}
+
+Date: ${dateStr}
+
+Note: This quote was generated automatically. Please contact the customer for further details.
+        `.trim();
+        
+        formData.append('message', emailBody);
+        formData.append('from_name', 'The Wall Company India');
+        formData.append('reply_to', 'thewallcompanygroup@gmail.com');
+        
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Success - show a subtle success message
+                const successMsg = document.createElement('div');
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #10b981;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    z-index: 9999;
+                    font-family: Inter, sans-serif;
+                    font-size: 14px;
+                    max-width: 300px;
+                `;
+                successMsg.textContent = 'Quote sent successfully! We will contact you soon.';
+                document.body.appendChild(successMsg);
+                
+                // Remove message after 5 seconds
+                setTimeout(() => {
+                    if (successMsg.parentNode) {
+                        successMsg.parentNode.removeChild(successMsg);
+                    }
+                }, 5000);
+            } else {
+                console.error('Email sending failed:', data.message);
+                // Don't show error to user since PDF was already downloaded successfully
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            // Don't show error to user since PDF was already downloaded successfully
+        }
+        
+        // Hide customer info form after processing
+        hideCustomerInfoForm();
     }
 
     if (quoteForm) {
