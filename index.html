@@ -82,10 +82,15 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="wall-showcase">
-                        <div class="wall-panel panel-1"><img src="images/wall1.jpg" alt="The Wall"></div>
-                        <div class="wall-panel panel-2"><img src="images/wall2.jpg" alt="The Wall"></div>
-                        <div class="wall-panel panel-3"><img src="images/wall3.jpg" alt="The Wall"></div>
+                    <div class="wall-showcase" id="wallShowcase">
+                        <div class="wall-showcase-container" id="showcaseContainer">
+                        </div>
+                        <div class="wall-showcase-controls">
+                            <button class="wall-showcase-btn" id="prevBtn" aria-label="Previous slide">❮</button>
+                            <button class="wall-showcase-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">⛶</button>
+                            <button class="wall-showcase-btn" id="nextBtn" aria-label="Next slide">❯</button>
+                        </div>
+                        <div class="wall-showcase-progress" id="showcaseProgress"></div>
                     </div>
                 </div>
             </div>
@@ -164,9 +169,16 @@
                                 <div class="form-group">
                                     <label for="locationMap">Project Location</label>
                                     <div class="map-container">
+                                        <div class="location-search">
+                                            <div class="search-input-wrapper">
+                                                <input type="text" id="locationSearch" placeholder="Search location (address, landmark, city)..." autocomplete="off">
+                                                <button id="clearSearch" class="clear-search-btn" aria-label="Clear search" style="display: none;">✕</button>
+                                            </div>
+                                            <div id="searchResults" class="search-results" style="display: none;"></div>
+                                        </div>
                                         <div id="map" class="map"></div>
                                         <div class="map-instructions">
-                                            <p>Click on the map to place your property marker</p>
+                                            <p>Click on the map or search for a location to place your property marker</p>
                                             <div class="distance-info">
                                                 <span class="distance-label">Distance from reference point:</span>
                                                 <span id="distanceValue" class="distance-value">0.00</span>

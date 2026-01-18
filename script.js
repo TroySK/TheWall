@@ -146,6 +146,200 @@ document.addEventListener('DOMContentLoaded', function() {
         if (extraCostValue) {
             extraCostValue.textContent = 'Rs.0';
         }
+        
+        // Initialize location search functionality
+        initLocationSearch();
+    }
+
+    // Location Search Functionality
+    function initLocationSearch() {
+        const searchInput = document.getElementById('locationSearch');
+        const searchResults = document.getElementById('searchResults');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        let searchTimeout = null;
+
+        // Debounced search function
+        const debouncedSearch = debounce(async (query) => {
+            if (query.length < 3) {
+                hideSearchResults();
+                return;
+            }
+            await searchLocation(query);
+        }, 500);
+
+        // Search input event listener
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                
+                // Show/hide clear button
+                if (clearSearchBtn) {
+                    clearSearchBtn.style.display = query.length > 0 ? 'block' : 'none';
+                }
+                
+                // Trigger search
+                if (query.length >= 3) {
+                    debouncedSearch(query);
+                } else {
+                    hideSearchResults();
+                }
+            });
+
+            // Keyboard navigation
+            searchInput.addEventListener('keydown', (e) => {
+                const results = document.querySelectorAll('.search-result-item');
+                const selected = document.querySelector('.search-result-item.selected');
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const next = selected ? selected.nextElementSibling : results[0];
+                    if (next) {
+                        results.forEach(r => r.classList.remove('selected'));
+                        next.classList.add('selected');
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prev = selected ? selected.previousElementSibling : results[results.length - 1];
+                    if (prev) {
+                        results.forEach(r => r.classList.remove('selected'));
+                        prev.classList.add('selected');
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selected) {
+                        selected.click();
+                    }
+                } else if (e.key === 'Escape') {
+                    hideSearchResults();
+                    searchInput.blur();
+                }
+            });
+
+            // Focus and blur events
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim().length >= 3) {
+                    debouncedSearch(searchInput.value.trim());
+                }
+            });
+
+            // Close results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    hideSearchResults();
+                }
+            });
+        }
+
+        // Clear search button
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    clearSearchBtn.style.display = 'none';
+                    hideSearchResults();
+                    searchInput.focus();
+                }
+            });
+        }
+
+        // Search function using Nominatim API
+        async function searchLocation(query) {
+            if (!searchResults) return;
+
+            // Show loading state
+            showLoadingResults();
+
+            try {
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1&countrycodes=in&bounded=1&viewbox=86.5,27.5,90.5,25.5`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Search failed');
+                }
+                
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    showNoResults();
+                } else {
+                    displaySearchResults(data);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showErrorResults();
+            }
+        }
+
+        // Display search results
+        function displaySearchResults(results) {
+            searchResults.innerHTML = '';
+            
+            results.forEach((result, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'search-result-item';
+                
+                const displayName = result.display_name.split(',').slice(0, 2).join(',');
+                const description = result.address ? 
+                    `${result.address.city || result.address.town || result.address.village || ''}, ${result.address.state || ''}`.replace(/^,\s*/, '') : 
+                    result.display_name;
+                
+                resultItem.innerHTML = `
+                    <div class="search-result-title">${displayName}</div>
+                    <div class="search-result-description">${description}</div>
+                    <div class="search-result-type">${result.type || 'location'}</div>
+                `;
+                
+                resultItem.addEventListener('click', () => {
+                    const lat = parseFloat(result.lat);
+                    const lng = parseFloat(result.lon);
+                    
+                    // Place marker at selected location
+                    placeMarker({ lat, lng });
+                    
+                    // Update search input with selected location
+                    if (searchInput) {
+                        searchInput.value = displayName;
+                    }
+                    
+                    // Clear results
+                    hideSearchResults();
+                });
+                
+                searchResults.appendChild(resultItem);
+            });
+            
+            searchResults.style.display = 'block';
+        }
+
+        // Show loading state
+        function showLoadingResults() {
+            searchResults.innerHTML = '<div class="search-loading">Searching...</div>';
+            searchResults.style.display = 'block';
+        }
+
+        // Show no results
+        function showNoResults() {
+            searchResults.innerHTML = '<div class="search-error">No results found. Try a different search term.</div>';
+            searchResults.style.display = 'block';
+        }
+
+        // Show error state
+        function showErrorResults() {
+            searchResults.innerHTML = '<div class="search-error">Error searching. Please try again.</div>';
+            searchResults.style.display = 'block';
+        }
+
+        // Hide search results
+        function hideSearchResults() {
+            if (searchResults) {
+                searchResults.style.display = 'none';
+            }
+        }
     }
 
     // Debounced distance calculation to prevent multiple rapid API calls
@@ -896,6 +1090,293 @@ Note: This quote was generated automatically. Please contact the customer for fu
             btn.setAttribute('aria-label', btn.textContent);
         }
     });
+
+    // Wall Showcase Slideshow
+    const wallShowcase = document.getElementById('wallShowcase');
+    if (wallShowcase) {
+        // Media arrays
+        const media = {
+            images: [
+                'images/showcase/TheWall005.jpg',
+                'images/showcase/TheWall006.jpg',
+                'images/showcase/TheWall009.jpg',
+                'images/showcase/TheWall010.jpg',
+                'images/showcase/TheWall011.jpg',
+                'images/showcase/TheWall012.jpg',
+                'images/showcase/TheWall016.jpg',
+                'images/showcase/TheWall017.jpg',
+                'images/showcase/TheWall035.jpg',
+                'images/showcase/TheWall036.jpg',
+                'images/showcase/TheWall037.jpg',
+                'images/showcase/TheWall038.jpg',
+                'images/showcase/TheWall039.jpg',
+                'images/showcase/TheWall040.jpg',
+                'images/showcase/TheWall041.jpg',
+                'images/showcase/TheWall042.jpg',
+                'images/showcase/TheWall043.jpg',
+                'images/showcase/TheWall044.jpg',
+                'images/showcase/TheWall045.jpg',
+                'images/showcase/TheWall046.jpg',
+                'images/showcase/TheWall047.jpg',
+                'images/showcase/TheWall048.jpg',
+                'images/showcase/TheWall049.jpg',
+                'images/showcase/TheWall050.jpg',
+                'images/showcase/TheWall051.jpg',
+                'images/showcase/TheWall052.jpg',
+                'images/showcase/TheWall053.jpg',
+                'images/showcase/TheWall054.jpg',
+                'images/showcase/TheWall055.jpg',
+                'images/showcase/TheWall056.jpg',
+                'images/showcase/TheWall057.jpg',
+                'images/showcase/TheWall058.jpg',
+                'images/showcase/TheWall059.jpg',
+                'images/showcase/TheWall060.jpg',
+                'images/showcase/TheWall061.jpg',
+                'images/showcase/TheWall062.jpg',
+                'images/showcase/TheWall063.jpg'
+            ],
+            videos: [
+                'images/showcase/TheWall001.mp4',
+                'images/showcase/TheWall002.mp4',
+                'images/showcase/TheWall003.mp4',
+                'images/showcase/TheWall004.mp4',
+                'images/showcase/TheWall007.mp4',
+                'images/showcase/TheWall008.mp4',
+                'images/showcase/TheWall013.mp4',
+                'images/showcase/TheWall014.mp4',
+                'images/showcase/TheWall015.mp4',
+                'images/showcase/TheWall018.mp4',
+                'images/showcase/TheWall019.mp4',
+                'images/showcase/TheWall020.mp4',
+                'images/showcase/TheWall021.mp4',
+                'images/showcase/TheWall022.mp4',
+                'images/showcase/TheWall023.mp4',
+                'images/showcase/TheWall024.mp4',
+                'images/showcase/TheWall025.mp4',
+                'images/showcase/TheWall026.mp4',
+                'images/showcase/TheWall027.mp4',
+                'images/showcase/TheWall028.mp4',
+                'images/showcase/TheWall029.mp4',
+                'images/showcase/TheWall030.mp4',
+                'images/showcase/TheWall031.mp4',
+                'images/showcase/TheWall032.mp4',
+                'images/showcase/TheWall033.mp4',
+                'images/showcase/TheWall034.mp4',
+                'images/showcase/TheWall064.mp4',
+                'images/showcase/TheWall065.mp4',
+                'images/showcase/TheWall066.mp4',
+                'images/showcase/TheWall067.mp4',
+                'images/showcase/TheWall068.mp4',
+                'images/showcase/TheWall069.mp4',
+                'images/showcase/TheWall070.mp4',
+                'images/showcase/TheWall071.mp4',
+                'images/showcase/TheWall072.mp4',
+                'images/showcase/TheWall073.mp4',
+                'images/showcase/TheWall074.mp4',
+                'images/showcase/TheWall075.mp4',
+                'images/showcase/TheWall076.mp4',
+                'images/showcase/TheWall077.mp4'
+            ]
+        };
+
+        // Create interleaved playlist
+        const playlist = [];
+        const maxPairs = Math.min(media.images.length, media.videos.length);
+
+        for (let i = 0; i < maxPairs; i++) {
+            playlist.push({ type: 'image', src: media.images[i] });
+            playlist.push({ type: 'video', src: media.videos[i] });
+        }
+
+        for (let i = maxPairs; i < media.videos.length; i++) {
+            playlist.push({ type: 'video', src: media.videos[i] });
+        }
+
+        const showcaseContainer = document.getElementById('showcaseContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const showcaseProgress = document.getElementById('showcaseProgress');
+        let currentIndex = 0;
+        let autoplayInterval;
+        let isPaused = false;
+        let progressInterval;
+        const IMAGE_DURATION = 5000;
+        let progressStartTime;
+        let progressDuration;
+
+        // Create slides
+        playlist.forEach((item, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'wall-showcase-slide';
+            slide.dataset.index = index;
+
+            if (item.type === 'image') {
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.alt = `The Wall showcase ${index + 1}`;
+                img.loading = 'lazy';
+                img.onload = () => {
+                    if (img.naturalWidth > img.naturalHeight) {
+                        slide.classList.add('landscape');
+                    }
+                };
+                slide.appendChild(img);
+            } else {
+                const video = document.createElement('video');
+                video.src = item.src;
+                video.muted = true;
+                video.loop = false;
+                video.playsInline = true;
+                video.onloadedmetadata = () => {
+                    if (video.videoWidth > video.videoHeight) {
+                        slide.classList.add('landscape');
+                    }
+                };
+                slide.appendChild(video);
+            }
+
+            showcaseContainer.appendChild(slide);
+        });
+
+        const slides = document.querySelectorAll('.wall-showcase-slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                const video = slide.querySelector('video');
+                if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+
+            const currentSlide = slides[index];
+            currentSlide.classList.add('active');
+            currentIndex = index;
+
+            const video = currentSlide.querySelector('video');
+            if (video) {
+                progressDuration = video.duration * 1000;
+                video.play();
+            } else {
+                progressDuration = IMAGE_DURATION;
+            }
+
+            startProgress();
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentIndex + 1) % playlist.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            showSlide(prevIndex);
+        }
+
+        function startProgress() {
+            if (progressInterval) clearInterval(progressInterval);
+            progressStartTime = Date.now();
+            showcaseProgress.style.width = '0%';
+            showcaseProgress.style.transition = 'none';
+
+            requestAnimationFrame(() => {
+                showcaseProgress.style.transition = `width ${progressDuration}ms linear`;
+                showcaseProgress.style.width = '100%';
+            });
+
+            progressInterval = setInterval(() => {
+                const elapsed = Date.now() - progressStartTime;
+                const remaining = progressDuration - elapsed;
+
+                if (remaining <= 0) {
+                    clearInterval(progressInterval);
+                    if (!isPaused) {
+                        nextSlide();
+                    }
+                }
+            }, 100);
+        }
+
+        function pauseSlideshow() {
+            isPaused = true;
+            const currentSlide = slides[currentIndex];
+            const video = currentSlide.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+        }
+
+        function resumeSlideshow() {
+            isPaused = false;
+            const currentSlide = slides[currentIndex];
+            const video = currentSlide.querySelector('video');
+            if (video) {
+                video.play();
+            }
+            startProgress();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                wallShowcase.classList.add('fullscreen');
+                wallShowcase.requestFullscreen().catch(err => {
+                    wallShowcase.classList.remove('fullscreen');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                wallShowcase.classList.remove('fullscreen');
+            }
+        });
+
+        // Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        wallShowcase.addEventListener('mouseenter', pauseSlideshow);
+        wallShowcase.addEventListener('mouseleave', () => {
+            const currentSlide = slides[currentIndex];
+            const video = currentSlide.querySelector('video');
+            if (video && !video.paused) return;
+            resumeSlideshow();
+        });
+
+        // Video end event
+        slides.forEach((slide, index) => {
+            const video = slide.querySelector('video');
+            if (video) {
+                video.addEventListener('ended', () => {
+                    if (!isPaused) {
+                        nextSlide();
+                    }
+                });
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        });
+
+        // Initialize slideshow
+        showSlide(0);
+    }
 
     // Keyboard navigation for mobile menu
     document.addEventListener('keydown', (e) => {

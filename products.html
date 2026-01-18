@@ -110,10 +110,15 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="wall-showcase">
-                        <div class="wall-panel panel-1"><img src="images/wall1.jpg" alt="The Wall"></div>
-                        <div class="wall-panel panel-2"><img src="images/wall2.jpg" alt="The Wall"></div>
-                        <div class="wall-panel panel-3"><img src="images/wall3.jpg" alt="The Wall"></div>
+                    <div class="wall-showcase" id="wallShowcase">
+                        <div class="wall-showcase-container" id="showcaseContainer">
+                        </div>
+                        <div class="wall-showcase-controls">
+                            <button class="wall-showcase-btn" id="prevBtn" aria-label="Previous slide">❮</button>
+                            <button class="wall-showcase-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">⛶</button>
+                            <button class="wall-showcase-btn" id="nextBtn" aria-label="Next slide">❯</button>
+                        </div>
+                        <div class="wall-showcase-progress" id="showcaseProgress"></div>
                     </div>
                 </div>
             </div>
