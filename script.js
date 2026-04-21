@@ -1257,13 +1257,32 @@ Note: This quote was generated automatically. Please contact the customer for fu
 
             const video = currentSlide.querySelector('video');
             if (video) {
-                progressDuration = video.duration * 1000;
-                video.play();
+                let started = false;
+                const tryStart = () => {
+                    if (started) return;
+                    started = true;
+                    if (video.readyState >= 1) {
+                        progressDuration = (video.duration || 5) * 1000;
+                        video.play().catch(() => {});
+                        startProgress();
+                    } else {
+                        progressDuration = 5000;
+                        startProgress();
+                    }
+                };
+                if (video.readyState >= 1) {
+                    tryStart();
+                } else {
+                    video.addEventListener('loadedmetadata', function onMetadata() {
+                        video.removeEventListener('loadedmetadata', onMetadata);
+                        tryStart();
+                    });
+                    setTimeout(tryStart, 3000);
+                }
             } else {
                 progressDuration = IMAGE_DURATION;
+                startProgress();
             }
-
-            startProgress();
         }
 
         function nextSlide() {
