@@ -79,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Price configuration for wall types
     const prices = {
-        boundary: 100,
-        exterior: 140,
-        partition: 120
+        boundary: 120,
+        exterior: 170,
+        partition: 150
     };
 
     // Reference point coordinates (26°41'19.2"N 88°20'57.6"E)
